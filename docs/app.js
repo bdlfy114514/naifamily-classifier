@@ -148,7 +148,7 @@ function renderFamily() {
 
 async function init() {
   try {
-    if (!configPromise) configPromise = fetch(asset('./model-config.json')).then(response => {
+    if (!configPromise) configPromise = fetch(asset('./model-config.json'), {cache: 'no-cache'}).then(response => {
       if (!response.ok) throw new Error('识别配置加载失败，请刷新页面后重试。');
       return response.json();
     }).catch(error => { configPromise = undefined; throw error; });
