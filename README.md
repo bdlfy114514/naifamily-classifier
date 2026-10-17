@@ -313,34 +313,9 @@ raw_images/
 
 网页最高匹配度低于 40% 时显示“ops! 您上传的的图片中似乎没有奶家人”，并展示小奶；40% 及以上接受最高分候选。阈值位于 `docs/model-config.json` 的 `unknownThreshold`，导出脚本默认值也为 0.4。该分数未进行概率校准，阈值规则不等同于可靠的未知类别检测。浏览器 Canvas 与 Pillow 插值不同，分数可能有小幅差异。
 
-## 7. GitHub Pages 部署
 
-将代码和 `docs/` 推送到自己的 GitHub 仓库，在 Settings → Pages 中选择：
 
-- Source：Deploy from a branch；
-- Branch：`main`；
-- Folder：`/docs`。
-
-站点使用相对资源路径，可部署到仓库子路径。更新 `docs/` 后推送即可触发重新发布。若部署到自己的仓库，请同步修改网页和 README 中指向本项目的仓库链接。
-
-`scripts/publish_github.py` 是本项目维护者的发布辅助工具，目标账户和仓库固定为 `bdlfy114514/naifamily-classifier`。其他用户不应直接使用该脚本发布自己的仓库；手动配置 Pages 即可。工具通过 Git Credential Manager 获取授权，不在项目中存放凭据。
-
-## 8. 回归测试与训练包构建
-
-```powershell
-# 网页后处理和部署资产检查，需要 Node.js
-node --test tests/web.test.mjs
-
-# 网络兼容及分阶段训练检查
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-
-# 生成本地训练包，要求数据、最优权重和预训练缓存齐全
-.\.venv\Scripts\python.exe scripts\package_training.py
-```
-
-打包输出为 `dist/naifamily-training-kit.zip`，并生成 `.zip.sha256` 校验文件。包内不包含 `.git/`、GitHub 登录信息、虚拟环境或临时文件。`dist/` 已加入 Git 忽略规则。
-
-## 9. 实测结果与适用范围
+## 7. 实测结果与适用范围
 
 固定数据划分为训练 163、验证 33、测试 33 张。默认 ResNet18 实验使用 XPU，在第 21 轮早停，第 9 轮的模型按验证集选为最优。
 
