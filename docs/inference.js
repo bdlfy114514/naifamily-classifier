@@ -1,4 +1,4 @@
-import {summarizeScores} from './inference-utils.mjs';
+import {summarizeScores} from './inference-utils.mjs?v=20261017-ratio15';
 
 const relativeURL = path => new URL(path, import.meta.url).href;
 let sessionPromise;

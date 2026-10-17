@@ -22,13 +22,13 @@ test('high match returns the winning class and its own show image', () => {
   assert.equal(result.topMatches.length, 3);
 });
 
-test('low matches return the exact requested message configuration and 小奶 image', () => {
+test('tied matches return the exact requested message configuration and 小奶 image', () => {
   const result = summarizeScores(config.classes.map(()=>0), config);
   assert.equal(result.unknown, true);
   assert.equal(config.unknownMessage, 'ops! 您上传的的图片中似乎没有奶家人');
   assert.equal(result.display.name, '小奶');
   assert.equal(result.display.image, config.classes.find(item=>item.name==='小奶').image);
-  assert.ok(result.confidence < config.unknownThreshold);
+  assert.equal(result.topMatches[0].probability, result.topMatches[1].probability);
 });
 
 test('invalid model outputs fail instead of inventing a prediction', () => {
@@ -37,14 +37,22 @@ test('invalid model outputs fail instead of inventing a prediction', () => {
   assert.throws(()=>summarizeScores(config.classes.map(()=>NaN),config));
 });
 
-test('40 percent threshold accepts a 45 percent match and rejects a 39 percent match', () => {
-  assert.equal(config.unknownThreshold, 0.4);
-  for (const [probability, expectedUnknown] of [[0.45, false], [0.39, true]]) {
-    const otherProbability = (1-probability)/(config.classes.length-1);
-    const logits = config.classes.map((_, index)=>Math.log(index === 0 ? probability : otherProbability));
+test('acceptance depends only on a strict 1.5 top-two ratio', () => {
+  assert.equal(config.minTopScoreRatio, 1.5);
+  assert.equal('unknownThreshold' in config, false);
+  for (const [first, second, expectedUnknown] of [
+    [0.30, 0.15, false], // Below the old 40% cutoff, but a clear winner.
+    [0.60, 0.40, true], // Exactly 1.5 times is rejected.
+    [0.59, 0.40, true], // High absolute score is insufficient.
+    [0.61, 0.39, false],
+    [0.40, 0.40, true],
+  ]) {
+    const remaining = Math.max(0, 1-first-second)/(config.classes.length-2);
+    const logits = config.classes.map((_, index) => Math.log(
+      Math.max(Number.MIN_VALUE, index === 0 ? first : index === 1 ? second : remaining)));
     const result = summarizeScores(logits, config);
-    assert.ok(Math.abs(result.confidence-probability) < 1e-12);
-    assert.equal(result.unknown, expectedUnknown);
+    assert.equal(result.unknown, expectedUnknown, `${first} vs ${second}`);
+    assert.equal(result.display.name, expectedUnknown ? '小奶' : config.classes[0].name);
   }
 });
 

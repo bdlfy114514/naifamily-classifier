@@ -71,7 +71,6 @@
   "model": "assets/naifamily.onnx",
   "modelBytes": 44719142,
   "modelSha256": "293f704758240031b471ca4b93c069e566ea97d262436dc272f7061a7eb456f5",
-  "unknownThreshold": 0.4,
   "fallbackClass": "小奶",
   "unknownMessage": "ops! 您上传的的图片中似乎没有奶家人",
   "metrics": {
@@ -82,5 +81,6 @@
   "source": {
     "architecture": "resnet18",
     "bestEpoch": 9
-  }
+  },
+  "minTopScoreRatio": 1.5
 }
