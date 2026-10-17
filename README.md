@@ -19,7 +19,7 @@ cd naifamily-classifier
 
 ### 1.2 本地完整训练包
 
-文件名：`naifamily-training-kit.zip`。该压缩包在维护者本地 `dist/` 目录生成，不上传到 Git 仓库。
+文件名：`naifamily-training-kit.zip`。该压缩包已上传至Release。
 
 训练包包含：
 
