@@ -60,7 +60,7 @@ function modelError(error) {
   $('model-progress').hidden = true;
 }
 
-function chooseFile(file) {
+function chooseFile(file, family = '') {
   if (!file) return;
   const allowed = /^(image\/(jpeg|png|webp|avif|bmp|gif))$/i.test(file.type) ||
     (!file.type && /\.(jpe?g|png|webp|avif|bmp|gif)$/i.test(file.name));
@@ -72,6 +72,7 @@ function chooseFile(file) {
   if (previewURL) URL.revokeObjectURL(previewURL);
   previewURL = URL.createObjectURL(file);
   $('input-preview').src = previewURL;
+  $('input-preview').dataset.family = family;
   $('file-name').textContent = file.name;
   $('upload-placeholder').hidden = true;
   $('upload-preview').hidden = false;
@@ -89,6 +90,7 @@ function showResult(result) {
   $('result-name').textContent = unknown ? config.unknownMessage : display.name;
   $('result-description').textContent = unknown ? '先让小奶陪你一会儿。也可以换张主体更清晰的图片再试试。' : descriptions[display.name];
   $('result-image').src = asset(display.image);
+  $('result-image').dataset.family = display.name;
   $('result-image').alt = `${display.name}展示图`;
   const list = $('match-list');
   list.replaceChildren();
@@ -123,7 +125,7 @@ async function useExample(item) {
     const response = await fetch(asset(item.image));
     if (!response.ok) throw new Error('示例图片加载失败，请稍后重试。');
     const blob = await response.blob();
-    chooseFile(new File([blob], `${item.name}示例.webp`, {type: 'image/webp'}));
+    chooseFile(new File([blob], `${item.name}示例.webp`, {type: 'image/webp'}), item.name);
     $('recognizer').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start'});
     await runRecognition();
   } catch (error) { errorMessage(error.message); }
@@ -135,6 +137,7 @@ function renderFamily() {
     const button = document.createElement('button'); button.type = 'button'; button.className = 'family-tile';
     button.setAttribute('aria-label', `用${item.name}展示图试试识别`);
     const image = document.createElement('img'); image.src = asset(item.image); image.alt = item.name; image.loading = 'lazy';
+    image.dataset.family = item.name;
     const caption = document.createElement('div'); caption.className = 'tile-caption';
     const name = document.createElement('strong'); name.textContent = item.name;
     const arrow = document.createElement('span'); arrow.textContent = '↗'; arrow.setAttribute('aria-hidden', 'true');

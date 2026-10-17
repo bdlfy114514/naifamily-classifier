@@ -7,4 +7,5 @@ data_preview/
 runs/
 test_results/
 artifacts/
+dist/
 *.pt

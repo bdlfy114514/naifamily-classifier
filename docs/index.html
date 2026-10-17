@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f5ed">
   <meta name="description" content="上传一张图片，看看它是哪位奶家人。11 类奶家人识别，图片仅在你的浏览器中处理。">
-  <title>奶家人识别器 · 认领你的快乐搭子</title>
+  <title>奶家人识别器</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
   <script defer src="./vendor/ort.wasm.min.js"></script>
@@ -28,9 +28,8 @@
     <main>
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <div class="eyebrow"><span class="tiny-star">✳</span> 一份浓度超标的快乐</div>
-          <h1 id="hero-title">万物皆可奶，<br>你是哪一款<span class="question-mark">？</span></h1>
-          <p>是奶蛙，还是奶龙？<br>上传一张照片，让你的奶家人闪亮登场。</p>
+          <h1 id="hero-title">这是什么生物？</h1>
+          <p>是奶蛙，还是奶龙？</p>
           <div class="hero-tags"><span><i class="green-dot"></i> 11 位奶家人</span><span>图片不上传 · 浏览器内识别</span></div>
         </div>
         <div class="hero-art" aria-label="奶蛙、小奶和奶鼠的展示图">
@@ -46,7 +45,7 @@
         <div class="section-top"><div><span class="section-number">01 / FIND YOUR FAMILY</span><h2 id="recognizer-title">奶家人，集合！</h2></div><span class="section-note">只需要一张图，快乐就到位。</span></div>
         <div class="workspace">
           <article class="upload-panel panel">
-            <div class="panel-heading"><span class="step-dot">1</span><h3>请出你的神秘嘉宾</h3><span class="mini-tag">YOUR PHOTO</span></div>
+            <div class="panel-heading"><span class="step-dot">1</span><h3>上传要识别的生物图片</h3><span class="mini-tag">YOUR PHOTO</span></div>
             <div id="drop-zone" class="drop-zone">
               <div id="upload-placeholder" class="upload-placeholder">
                 <span class="upload-icon" aria-hidden="true"><svg width="42" height="42" viewBox="0 0 48 48" fill="none"><rect x="7" y="9" width="34" height="29" rx="5" stroke="currentColor" stroke-width="2.4"/><circle cx="17" cy="19" r="3" fill="currentColor"/><path d="m10 34 9-9 7 7 6-6 7 8M36 4v10m-5-5h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -68,8 +67,8 @@
           </article>
 
           <article id="result-panel" class="result-panel panel" aria-labelledby="result-heading" aria-live="polite" aria-busy="false">
-            <div class="panel-heading"><span class="step-dot">2</span><h3 id="result-heading">你的奶家人档案</h3><span class="mini-tag">THE REVEAL</span></div>
-            <div id="result-empty" class="result-empty"><div class="empty-bubble">你好呀，等你很久了！<span aria-hidden="true">✧</span></div><img src="./assets/family-09.webp" alt="等待识别的小奶"><h4>是谁还没找到自己的奶家人？</h4><p>选好图片，按下「开始识别」吧。</p><span class="empty-stamp">100% 快乐含量</span></div>
+            <div class="panel-heading"><span class="step-dot">2</span><h3 id="result-heading">这是...</h3><span class="mini-tag">THE REVEAL</span></div>
+            <div id="result-empty" class="result-empty"><div class="empty-bubble">你好呀，等你很久了！<span aria-hidden="true">✧</span></div><img src="./assets/family-09.webp" alt="等待识别的小奶"><p>选好图片，按下「开始识别」吧。</p><span class="empty-stamp">100% 快乐含量</span></div>
             <div id="result-content" class="result-content" hidden>
               <div class="result-title-row"><span id="result-kicker" class="result-kicker">奶家人认证成功</span><span id="match-badge" class="match-badge"></span></div>
               <h4 id="result-name"></h4><p id="result-description" class="result-description"></p>
