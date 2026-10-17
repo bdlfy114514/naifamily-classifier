@@ -2,7 +2,9 @@
 
 上传一张图片，识别它是哪位奶家人，并显示 `show/` 提供的对应展示图。网页在浏览器本地运行最优 ResNet18 模型，**图片不上传到服务器**。可直接部署到 GitHub Pages，无需 Python 后端和付费推理接口。
 
-目标仓库：`bdlfy114514/naifamily-classifier`。网页标题为“奶家人识别器”。
+**[打开奶家人识别器 →](https://bdlfy114514.github.io/naifamily-classifier/)**
+
+仓库：[`bdlfy114514/naifamily-classifier`](https://github.com/bdlfy114514/naifamily-classifier)。网页标题为“奶家人识别器”。
 
 ## 网页功能
 
