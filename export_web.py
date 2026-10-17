@@ -71,7 +71,7 @@ def main():
     val_logits = session.run(['logits'], {'images': val_batch.numpy()})[0]
     val_prob = np.exp(val_logits-val_logits.max(1,keepdims=True))
     val_prob /= val_prob.sum(1,keepdims=True)
-    threshold = .55
+    threshold = .4
     metadata = {
         'schemaVersion': 1, 'classes': class_assets, 'inputSize': size,
         'mean': list(checkpoint['normalization']['mean']), 'std': list(checkpoint['normalization']['std']),

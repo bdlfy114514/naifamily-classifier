@@ -37,6 +37,17 @@ test('invalid model outputs fail instead of inventing a prediction', () => {
   assert.throws(()=>summarizeScores(config.classes.map(()=>NaN),config));
 });
 
+test('40 percent threshold accepts a 45 percent match and rejects a 39 percent match', () => {
+  assert.equal(config.unknownThreshold, 0.4);
+  for (const [probability, expectedUnknown] of [[0.45, false], [0.39, true]]) {
+    const otherProbability = (1-probability)/(config.classes.length-1);
+    const logits = config.classes.map((_, index)=>Math.log(index === 0 ? probability : otherProbability));
+    const result = summarizeScores(logits, config);
+    assert.ok(Math.abs(result.confidence-probability) < 1e-12);
+    assert.equal(result.unknown, expectedUnknown);
+  }
+});
+
 test('published assets match the model and version metadata', () => {
   assert.equal(new Set(config.classes.map(item=>item.name)).size, 11);
   for (const item of config.classes) assert.ok(existsSync(new URL(`../docs/${item.image}`, import.meta.url)));

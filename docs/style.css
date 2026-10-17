@@ -11,5 +11,6 @@
 .result-image-wrap{display:flex;align-items:center;justify-content:center}
 .result-image-wrap>img[data-family="小奶"]{width:auto;height:100%;max-width:100%}
 .upload-preview>img[data-family="小奶"]{width:auto;max-width:100%;margin-inline:auto}
+.footer-project{display:flex;align-items:center;flex-wrap:wrap;gap:7px}.footer-project a:hover{text-decoration:underline}
 @media(max-width:720px){.hero{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation-duration:.001ms!important}}
