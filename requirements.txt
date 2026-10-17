@@ -1,0 +1,4 @@
+# PyTorch/torchvision 由 setup_env.ps1 按 CPU、CUDA 或 XPU 后端单独安装。
+numpy==2.2.6
+Pillow==11.3.0
+matplotlib==3.10.6

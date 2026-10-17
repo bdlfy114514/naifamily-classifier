@@ -1,0 +1,4 @@
+# 仅导出/验证浏览器模型时需要；网页访客无需 Python。
+-r requirements.txt
+onnx==1.19.1
+onnxruntime==1.23.2

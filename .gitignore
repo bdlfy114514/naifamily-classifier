@@ -1,0 +1,10 @@
+.venv/
+.tmp/
+.cache/
+__pycache__/
+data_processed/
+data_preview/
+runs/
+test_results/
+artifacts/
+*.pt
