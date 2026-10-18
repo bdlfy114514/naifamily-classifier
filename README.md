@@ -350,9 +350,7 @@ raw_images/
 
 [完整 v1.2 评估报告](reports/v12_evaluation.json) 记录保留测试集比较、训练数据摘要与 ONNX 验证；本地 `runs/resnet18_v12/` 提供 best.pt、history.json、loss_curve.png 和 evaluation.json。网页 ONNX 与 PyTorch 的数值、分类及拒判一致性分别核验。[实际浏览器 Canvas/WASM 报告](reports/v12_browser_evaluation.json) 中，卡通误接受为 0/90、真人误接受为 1/90、奶家人分类及正确接受均为 32/33、真豆奶正确接受为 3/3。该真人边界样本的前二名分数比约为 1.522；Canvas 与 Pillow 预处理差异会影响接近阈值的结果，浏览器数字与上表桌面端结果应分别理解。train loss 包含负样本损失，val loss 是已知类别 CE，两者定义不同。
 
-### 7.2 新数据处理与负样本训练
-
-新数据实际位于 `new_data/`，每类 20 张，共 220 张，原文件保留。40 张为 1254×1252，预处理时沿长边两侧各裁 1 像素成为 1252×1252；其余 1254×1254 图片不额外裁边。新图不套用旧截图的水印裁剪，随后统一等比缩放并补白到 RGB 224×224。合并清单标记 `synthetic`、`reference_group_id`、原始尺寸及裁剪记录。去重后新增 220 张；用户有意删除的 1 张奶鸡图因遮挡鸡冠而不恢复。
+### 7.2 负样本训练
 
 真实负样本沿用 [LFW](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_lfw_people.html) 的 600 位不同人物，各一张图，按人物分组为 420/90/90。卡通负样本来自 [Google Cartoon Set](https://google.github.io/cartoonset/download.html)，抽取 600 个不同配置的头像，同样划分为 420/90/90，合计 1,200 张。下载脚本记录固定镜像、SHA-256、来源和划分，检查跨集合重复；Google 原存储不可访问时使用固定版本公开镜像并核验哈希。Cartoon Set 由 Google LLC 按 CC BY 4.0 提供，归属说明见负样本目录的 `ATTRIBUTION.txt`，项目 MIT 许可证不替代第三方图像许可。
 
