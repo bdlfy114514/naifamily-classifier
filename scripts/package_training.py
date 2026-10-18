@@ -10,7 +10,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'naifamily-training-kit'
-ROOT_FILES = ['README.md', '.gitignore', 'package.json', 'model.py', 'common.py', 'train.py',
+ROOT_FILES = ['README.md', 'LICENSE', '.gitignore', 'package.json', 'model.py', 'common.py', 'train.py',
               'test.py', 'preprocess.py', 'preprocess_config.json', 'export_web.py',
               'setup_env.ps1', 'requirements.txt', 'requirements-web.txt', 'requirements-lock.txt']
 DIRECTORIES = ['scripts', 'tests', 'reports', 'docs', 'show', 'data_processed',

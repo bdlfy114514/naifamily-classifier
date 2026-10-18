@@ -13,6 +13,17 @@ SHA256='b47c8422c8cded889dc5a13418c4bc2abbda121092b3533a83306f90d900100a'
 ROOT=Path(__file__).resolve().parents[1]
 
 def main():
+    output=ROOT/'hard_negatives/lfw'
+    manifest_path=output/'manifest.json'
+    if manifest_path.exists():
+        existing=json.loads(manifest_path.read_text(encoding='utf8'))
+        if existing['source']!=URL or existing['archive_sha256']!=SHA256:
+            raise ValueError('Existing subset has an unexpected source')
+        for record in existing['records']:
+            image=(output/record['path']).resolve()
+            if not image.is_relative_to(output.resolve()) or hashlib.sha256(image.read_bytes()).hexdigest()!=record['sha256']:
+                raise ValueError('Existing subset image changed or escaped its root')
+        print('Existing verified subset retained; no download needed'); return
     archive=ROOT/'.cache/lfw-funneled.tgz'
     archive.parent.mkdir(exist_ok=True)
     if not archive.exists():
@@ -25,9 +36,6 @@ def main():
         temp.replace(archive)
     if hashlib.sha256(archive.read_bytes()).hexdigest()!=SHA256:
         raise ValueError('LFW archive checksum mismatch')
-    output=ROOT/'hard_negatives/lfw'
-    if (output/'manifest.json').exists():
-        print('Existing subset retained'); return
     output.mkdir(parents=True,exist_ok=True)
     with tarfile.open(archive,'r:gz') as tar:
         groups={}
