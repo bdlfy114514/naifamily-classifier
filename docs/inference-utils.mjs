@@ -9,14 +9,18 @@ export function softmax(logits) {
   return values.map(value => value / sum);
 }
 
+// Allow a few floating-point rounding units when testing strict boundaries.
+const exceeds = (left, right) => left - right > 4 * Number.EPSILON;
+
 export function summarizeScores(logits, config) {
-  if (logits.length !== config.classes.length || (config.classes.length < 2 || !Number.isFinite(config.minTopScoreRatio) || config.minTopScoreRatio < 1)) {
+  if (logits.length !== config.classes.length || (config.classes.length < 2 || !Number.isFinite(config.minTopScoreRatio) || config.minTopScoreRatio < 1 || !Number.isFinite(config.minConfidence) || config.minConfidence < 0 || config.minConfidence > 1)) {
     throw new Error('模型与类别配置不一致，请刷新页面。');
   }
   const probabilities = softmax(logits);
   const ranking = probabilities.map((probability, index) => ({...config.classes[index], index, probability}))
     .sort((a, b) => b.probability - a.probability || a.index - b.index);
-  const unknown = ranking[0].probability <= ranking[1].probability * config.minTopScoreRatio;
+  const unknown = !exceeds(ranking[0].probability, config.minConfidence) ||
+    !exceeds(ranking[0].probability, ranking[1].probability * config.minTopScoreRatio);
   const display = unknown ? config.classes.find(item => item.name === config.fallbackClass) : ranking[0];
   if (!display) throw new Error('缺少展示图配置。');
   return {unknown, display, topMatches: ranking.slice(0, 3), confidence: ranking[0].probability};

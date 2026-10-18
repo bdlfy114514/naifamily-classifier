@@ -83,6 +83,8 @@
     "architecture": "resnet18",
     "bestEpoch": 6,
     "trainingMethod": "outlier_exposure",
-    "version": "v1.2"
-  }
+    "version": "v1.2.1",
+    "weightsVersion": "v1.2"
+  },
+  "minConfidence": 0.25
 }

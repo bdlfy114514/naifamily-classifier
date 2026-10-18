@@ -1,0 +1,1765 @@
+{
+  "modelSha256": "ae133110b271e54ac4289d34c953cef9a3c3b12312018909dca5bff7ba3d398f",
+  "version": "v1.2.1",
+  "knownTotal": 33,
+  "knownRawCorrect": 32,
+  "knownAcceptedCorrect": 32,
+  "dounaiTotal": 3,
+  "dounaiAcceptedCorrect": 3,
+  "negativeBySource": {
+    "real_face": {
+      "total": 90,
+      "falseAccepted": 0,
+      "acceptedAsDounai": 0
+    },
+    "cartoon_face": {
+      "total": 90,
+      "falseAccepted": 0,
+      "acceptedAsDounai": 0
+    }
+  },
+  "rows": [
+    {
+      "file": "negative-000.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09415491895878127,
+      "second": 0.09369630021647965,
+      "unknown": true
+    },
+    {
+      "file": "negative-001.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09652882894038047,
+      "second": 0.0941780743478035,
+      "unknown": true
+    },
+    {
+      "file": "negative-002.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09761061004289547,
+      "second": 0.0922905374315335,
+      "unknown": true
+    },
+    {
+      "file": "negative-003.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09569438403001325,
+      "second": 0.09464598233906331,
+      "unknown": true
+    },
+    {
+      "file": "negative-004.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09544317154273589,
+      "second": 0.09489280975916439,
+      "unknown": true
+    },
+    {
+      "file": "negative-005.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09490261207813776,
+      "second": 0.09290821956858408,
+      "unknown": true
+    },
+    {
+      "file": "negative-006.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.0961965178592442,
+      "second": 0.09513757368132936,
+      "unknown": true
+    },
+    {
+      "file": "negative-007.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.09523220895923662,
+      "second": 0.0945526269163626,
+      "unknown": true
+    },
+    {
+      "file": "negative-008.jpg",
+      "kind": "real_face",
+      "top": "小奶",
+      "confidence": 0.09851117430628796,
+      "second": 0.09473960263287506,
+      "unknown": true
+    },
+    {
+      "file": "negative-009.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09539881114344112,
+      "second": 0.09302562943116262,
+      "unknown": true
+    },
+    {
+      "file": "negative-010.jpg",
+      "kind": "real_face",
+      "top": "奶蛙",
+      "confidence": 0.09609012222846343,
+      "second": 0.09451558492691021,
+      "unknown": true
+    },
+    {
+      "file": "negative-011.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.09511835113768359,
+      "second": 0.09478588927378837,
+      "unknown": true
+    },
+    {
+      "file": "negative-012.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09941814005521031,
+      "second": 0.09435363665482711,
+      "unknown": true
+    },
+    {
+      "file": "negative-013.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.09891238651981113,
+      "second": 0.09450484205359837,
+      "unknown": true
+    },
+    {
+      "file": "negative-014.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.0950786645058471,
+      "second": 0.09460109479235866,
+      "unknown": true
+    },
+    {
+      "file": "negative-015.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09300975811850892,
+      "second": 0.09292472349119661,
+      "unknown": true
+    },
+    {
+      "file": "negative-016.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.09667431375951271,
+      "second": 0.0958355421732626,
+      "unknown": true
+    },
+    {
+      "file": "negative-017.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.09416877777887749,
+      "second": 0.09386697009017486,
+      "unknown": true
+    },
+    {
+      "file": "negative-018.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.0980620112068413,
+      "second": 0.0954755188132748,
+      "unknown": true
+    },
+    {
+      "file": "negative-019.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.09908129459335573,
+      "second": 0.09712518636103644,
+      "unknown": true
+    },
+    {
+      "file": "negative-020.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.10115935849737619,
+      "second": 0.09921950367506789,
+      "unknown": true
+    },
+    {
+      "file": "negative-021.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.09573093343916705,
+      "second": 0.09430459744451256,
+      "unknown": true
+    },
+    {
+      "file": "negative-022.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09342700027712171,
+      "second": 0.09335608705221446,
+      "unknown": true
+    },
+    {
+      "file": "negative-023.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.0957502718515881,
+      "second": 0.09516108469685734,
+      "unknown": true
+    },
+    {
+      "file": "negative-024.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.09556990117679699,
+      "second": 0.09540641704020023,
+      "unknown": true
+    },
+    {
+      "file": "negative-025.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.09699635713732928,
+      "second": 0.09618322927035672,
+      "unknown": true
+    },
+    {
+      "file": "negative-026.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.10161554334256842,
+      "second": 0.09535025923632687,
+      "unknown": true
+    },
+    {
+      "file": "negative-027.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.0968725717543178,
+      "second": 0.09651104372881002,
+      "unknown": true
+    },
+    {
+      "file": "negative-028.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09532781550761821,
+      "second": 0.09367489922486656,
+      "unknown": true
+    },
+    {
+      "file": "negative-029.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.0938663703761375,
+      "second": 0.09350476742743355,
+      "unknown": true
+    },
+    {
+      "file": "negative-030.jpg",
+      "kind": "real_face",
+      "top": "奶蛋",
+      "confidence": 0.0955523427874765,
+      "second": 0.0941672239243803,
+      "unknown": true
+    },
+    {
+      "file": "negative-031.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09743087417354816,
+      "second": 0.09534771871627436,
+      "unknown": true
+    },
+    {
+      "file": "negative-032.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09497671618341547,
+      "second": 0.09466401837066024,
+      "unknown": true
+    },
+    {
+      "file": "negative-033.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09533627293816264,
+      "second": 0.09377208238270167,
+      "unknown": true
+    },
+    {
+      "file": "negative-034.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09593556598220414,
+      "second": 0.09430629847763984,
+      "unknown": true
+    },
+    {
+      "file": "negative-035.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09560036097627278,
+      "second": 0.09496230986805566,
+      "unknown": true
+    },
+    {
+      "file": "negative-036.jpg",
+      "kind": "real_face",
+      "top": "奶鸡",
+      "confidence": 0.10286653457211524,
+      "second": 0.10231742636364331,
+      "unknown": true
+    },
+    {
+      "file": "negative-037.jpg",
+      "kind": "real_face",
+      "top": "小奶",
+      "confidence": 0.09705866820193244,
+      "second": 0.09652729622189267,
+      "unknown": true
+    },
+    {
+      "file": "negative-038.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09453568435075867,
+      "second": 0.09406620803091634,
+      "unknown": true
+    },
+    {
+      "file": "negative-039.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09396793742533467,
+      "second": 0.09189152422135155,
+      "unknown": true
+    },
+    {
+      "file": "negative-040.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.09643515431477304,
+      "second": 0.09618867121502168,
+      "unknown": true
+    },
+    {
+      "file": "negative-041.jpg",
+      "kind": "real_face",
+      "top": "小奶",
+      "confidence": 0.09383868426429934,
+      "second": 0.09351920688111054,
+      "unknown": true
+    },
+    {
+      "file": "negative-042.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09912406528677342,
+      "second": 0.09890958946246341,
+      "unknown": true
+    },
+    {
+      "file": "negative-043.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09930216862333094,
+      "second": 0.09292248584471874,
+      "unknown": true
+    },
+    {
+      "file": "negative-044.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09584859687035822,
+      "second": 0.09513243785993888,
+      "unknown": true
+    },
+    {
+      "file": "negative-045.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.0955278950404086,
+      "second": 0.09503069905577655,
+      "unknown": true
+    },
+    {
+      "file": "negative-046.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09362702645659883,
+      "second": 0.09213411413900129,
+      "unknown": true
+    },
+    {
+      "file": "negative-047.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09756224825476437,
+      "second": 0.09416229166890722,
+      "unknown": true
+    },
+    {
+      "file": "negative-048.jpg",
+      "kind": "real_face",
+      "top": "奶蛙",
+      "confidence": 0.09585044564682031,
+      "second": 0.09428514383071958,
+      "unknown": true
+    },
+    {
+      "file": "negative-049.jpg",
+      "kind": "real_face",
+      "top": "奶史",
+      "confidence": 0.09663864315407453,
+      "second": 0.09613298616220774,
+      "unknown": true
+    },
+    {
+      "file": "negative-050.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09441911381283317,
+      "second": 0.09401619306283857,
+      "unknown": true
+    },
+    {
+      "file": "negative-051.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09550778479847256,
+      "second": 0.09418389079634122,
+      "unknown": true
+    },
+    {
+      "file": "negative-052.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09534389644739633,
+      "second": 0.09466658619880434,
+      "unknown": true
+    },
+    {
+      "file": "negative-053.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.0960333435393937,
+      "second": 0.09558595365359264,
+      "unknown": true
+    },
+    {
+      "file": "negative-054.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09447181649846771,
+      "second": 0.09311936205230364,
+      "unknown": true
+    },
+    {
+      "file": "negative-055.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09342034707718806,
+      "second": 0.09323458551828603,
+      "unknown": true
+    },
+    {
+      "file": "negative-056.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09354996180682759,
+      "second": 0.0935202216463225,
+      "unknown": true
+    },
+    {
+      "file": "negative-057.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09590390701490387,
+      "second": 0.09329702679986825,
+      "unknown": true
+    },
+    {
+      "file": "negative-058.jpg",
+      "kind": "real_face",
+      "top": "奶龙",
+      "confidence": 0.09608919593272672,
+      "second": 0.09420111640466786,
+      "unknown": true
+    },
+    {
+      "file": "negative-059.jpg",
+      "kind": "real_face",
+      "top": "小奶",
+      "confidence": 0.09336485099765446,
+      "second": 0.09207461726279867,
+      "unknown": true
+    },
+    {
+      "file": "negative-060.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.0954419498244324,
+      "second": 0.09209350634489459,
+      "unknown": true
+    },
+    {
+      "file": "negative-061.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09510946038538784,
+      "second": 0.09427421912202567,
+      "unknown": true
+    },
+    {
+      "file": "negative-062.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09585036531862,
+      "second": 0.09565143323387262,
+      "unknown": true
+    },
+    {
+      "file": "negative-063.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.09552214610883958,
+      "second": 0.09446934475124472,
+      "unknown": true
+    },
+    {
+      "file": "negative-064.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.0976904721406071,
+      "second": 0.0950308368570924,
+      "unknown": true
+    },
+    {
+      "file": "negative-065.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.15029373450874997,
+      "second": 0.0987434383652472,
+      "unknown": true
+    },
+    {
+      "file": "negative-066.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.0940519005838986,
+      "second": 0.09232544643103943,
+      "unknown": true
+    },
+    {
+      "file": "negative-067.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09550045855830051,
+      "second": 0.09409730542302555,
+      "unknown": true
+    },
+    {
+      "file": "negative-068.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09616447953497594,
+      "second": 0.09451361857312726,
+      "unknown": true
+    },
+    {
+      "file": "negative-069.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.0957395798085958,
+      "second": 0.09422096322583817,
+      "unknown": true
+    },
+    {
+      "file": "negative-070.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09433863172706844,
+      "second": 0.09350658098187377,
+      "unknown": true
+    },
+    {
+      "file": "negative-071.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09742677888508931,
+      "second": 0.09500104988945414,
+      "unknown": true
+    },
+    {
+      "file": "negative-072.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09450432219986041,
+      "second": 0.09425951307258693,
+      "unknown": true
+    },
+    {
+      "file": "negative-073.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09451237746539402,
+      "second": 0.09431376056093843,
+      "unknown": true
+    },
+    {
+      "file": "negative-074.jpg",
+      "kind": "real_face",
+      "top": "小奶",
+      "confidence": 0.09423606374061896,
+      "second": 0.09300781752670385,
+      "unknown": true
+    },
+    {
+      "file": "negative-075.jpg",
+      "kind": "real_face",
+      "top": "奶龙",
+      "confidence": 0.09606313828619535,
+      "second": 0.0957065493785656,
+      "unknown": true
+    },
+    {
+      "file": "negative-076.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09890353752748163,
+      "second": 0.09813983670751057,
+      "unknown": true
+    },
+    {
+      "file": "negative-077.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.10085875676640381,
+      "second": 0.09229179010959591,
+      "unknown": true
+    },
+    {
+      "file": "negative-078.jpg",
+      "kind": "real_face",
+      "top": "小奶",
+      "confidence": 0.09755543655781553,
+      "second": 0.09387236510157493,
+      "unknown": true
+    },
+    {
+      "file": "negative-079.jpg",
+      "kind": "real_face",
+      "top": "奶龙",
+      "confidence": 0.0943502347212473,
+      "second": 0.09383540454826839,
+      "unknown": true
+    },
+    {
+      "file": "negative-080.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.10841056211765998,
+      "second": 0.10486643898258051,
+      "unknown": true
+    },
+    {
+      "file": "negative-081.jpg",
+      "kind": "real_face",
+      "top": "奶粉",
+      "confidence": 0.09305639669185901,
+      "second": 0.09263752544867172,
+      "unknown": true
+    },
+    {
+      "file": "negative-082.jpg",
+      "kind": "real_face",
+      "top": "奶龙",
+      "confidence": 0.09310723801050175,
+      "second": 0.09256702277387087,
+      "unknown": true
+    },
+    {
+      "file": "negative-083.jpg",
+      "kind": "real_face",
+      "top": "豆奶",
+      "confidence": 0.09941984143826257,
+      "second": 0.09896215989475943,
+      "unknown": true
+    },
+    {
+      "file": "negative-084.jpg",
+      "kind": "real_face",
+      "top": "奶狗",
+      "confidence": 0.09920289976744139,
+      "second": 0.09520855718845603,
+      "unknown": true
+    },
+    {
+      "file": "negative-085.jpg",
+      "kind": "real_face",
+      "top": "奶蛋",
+      "confidence": 0.09299013129988948,
+      "second": 0.09272338214964544,
+      "unknown": true
+    },
+    {
+      "file": "negative-086.jpg",
+      "kind": "real_face",
+      "top": "奶猫",
+      "confidence": 0.09431200971149814,
+      "second": 0.09381571030223401,
+      "unknown": true
+    },
+    {
+      "file": "negative-087.jpg",
+      "kind": "real_face",
+      "top": "奶蛋",
+      "confidence": 0.09666870133901305,
+      "second": 0.09458055083358444,
+      "unknown": true
+    },
+    {
+      "file": "negative-088.jpg",
+      "kind": "real_face",
+      "top": "奶鼠",
+      "confidence": 0.09474761744179433,
+      "second": 0.0938468107033063,
+      "unknown": true
+    },
+    {
+      "file": "negative-089.jpg",
+      "kind": "real_face",
+      "top": "奶龙",
+      "confidence": 0.09529796870247437,
+      "second": 0.09168052341611312,
+      "unknown": true
+    },
+    {
+      "file": "negative-090.png",
+      "kind": "cartoon_face",
+      "top": "奶鸡",
+      "confidence": 0.09333262888157819,
+      "second": 0.09248389200183504,
+      "unknown": true
+    },
+    {
+      "file": "negative-091.png",
+      "kind": "cartoon_face",
+      "top": "奶鸡",
+      "confidence": 0.09436179802471066,
+      "second": 0.09254218176373068,
+      "unknown": true
+    },
+    {
+      "file": "negative-092.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09236964612147003,
+      "second": 0.0921759563093905,
+      "unknown": true
+    },
+    {
+      "file": "negative-093.png",
+      "kind": "cartoon_face",
+      "top": "豆奶",
+      "confidence": 0.09810873108152474,
+      "second": 0.09337528270227194,
+      "unknown": true
+    },
+    {
+      "file": "negative-094.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.0988296899693494,
+      "second": 0.09652357902713372,
+      "unknown": true
+    },
+    {
+      "file": "negative-095.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09393886007971058,
+      "second": 0.09389919362941385,
+      "unknown": true
+    },
+    {
+      "file": "negative-096.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.10430276409231262,
+      "second": 0.09711059567235673,
+      "unknown": true
+    },
+    {
+      "file": "negative-097.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09426020432157763,
+      "second": 0.09338227838468542,
+      "unknown": true
+    },
+    {
+      "file": "negative-098.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09597944052344407,
+      "second": 0.09305401011351072,
+      "unknown": true
+    },
+    {
+      "file": "negative-099.png",
+      "kind": "cartoon_face",
+      "top": "奶粉",
+      "confidence": 0.09603833058623916,
+      "second": 0.09565869399304139,
+      "unknown": true
+    },
+    {
+      "file": "negative-100.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.0940262640377973,
+      "second": 0.09339629855418578,
+      "unknown": true
+    },
+    {
+      "file": "negative-101.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.11201581937864874,
+      "second": 0.10220036766274401,
+      "unknown": true
+    },
+    {
+      "file": "negative-102.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.10156916180207685,
+      "second": 0.10107278127699948,
+      "unknown": true
+    },
+    {
+      "file": "negative-103.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.0953424572070994,
+      "second": 0.09427186556101012,
+      "unknown": true
+    },
+    {
+      "file": "negative-104.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.0926104081715172,
+      "second": 0.09210612746388525,
+      "unknown": true
+    },
+    {
+      "file": "negative-105.png",
+      "kind": "cartoon_face",
+      "top": "奶蛋",
+      "confidence": 0.09460256425936635,
+      "second": 0.09287261096301831,
+      "unknown": true
+    },
+    {
+      "file": "negative-106.png",
+      "kind": "cartoon_face",
+      "top": "奶粉",
+      "confidence": 0.09630171701904794,
+      "second": 0.09571286828199345,
+      "unknown": true
+    },
+    {
+      "file": "negative-107.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.09429898383938666,
+      "second": 0.093508305145738,
+      "unknown": true
+    },
+    {
+      "file": "negative-108.png",
+      "kind": "cartoon_face",
+      "top": "奶蛋",
+      "confidence": 0.09633289327229262,
+      "second": 0.09204925671243704,
+      "unknown": true
+    },
+    {
+      "file": "negative-109.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09622614055448467,
+      "second": 0.09260985080543761,
+      "unknown": true
+    },
+    {
+      "file": "negative-110.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.0984665550207343,
+      "second": 0.09545644844930068,
+      "unknown": true
+    },
+    {
+      "file": "negative-111.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09747916212489983,
+      "second": 0.09614723938129469,
+      "unknown": true
+    },
+    {
+      "file": "negative-112.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.09599917600725318,
+      "second": 0.09467672409338782,
+      "unknown": true
+    },
+    {
+      "file": "negative-113.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09766495902517942,
+      "second": 0.09533751653568909,
+      "unknown": true
+    },
+    {
+      "file": "negative-114.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09586741591175252,
+      "second": 0.09489562565847141,
+      "unknown": true
+    },
+    {
+      "file": "negative-115.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.09456212601857053,
+      "second": 0.0942740705444889,
+      "unknown": true
+    },
+    {
+      "file": "negative-116.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.10171475097681867,
+      "second": 0.09504761427028799,
+      "unknown": true
+    },
+    {
+      "file": "negative-117.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09496579751730369,
+      "second": 0.09366726708455525,
+      "unknown": true
+    },
+    {
+      "file": "negative-118.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09325628633697072,
+      "second": 0.09257948845651669,
+      "unknown": true
+    },
+    {
+      "file": "negative-119.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.0940631169003389,
+      "second": 0.09311567252402962,
+      "unknown": true
+    },
+    {
+      "file": "negative-120.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09417812953246774,
+      "second": 0.09408409169132721,
+      "unknown": true
+    },
+    {
+      "file": "negative-121.png",
+      "kind": "cartoon_face",
+      "top": "奶鸡",
+      "confidence": 0.09370558444562743,
+      "second": 0.09293194708243223,
+      "unknown": true
+    },
+    {
+      "file": "negative-122.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09730739236349185,
+      "second": 0.09337465469353562,
+      "unknown": true
+    },
+    {
+      "file": "negative-123.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09441688634669798,
+      "second": 0.09225281977917249,
+      "unknown": true
+    },
+    {
+      "file": "negative-124.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09500855856711836,
+      "second": 0.09472891214635355,
+      "unknown": true
+    },
+    {
+      "file": "negative-125.png",
+      "kind": "cartoon_face",
+      "top": "奶鸡",
+      "confidence": 0.09355669001326437,
+      "second": 0.09237305008328883,
+      "unknown": true
+    },
+    {
+      "file": "negative-126.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09414846170822477,
+      "second": 0.09339449724926491,
+      "unknown": true
+    },
+    {
+      "file": "negative-127.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.10377634499971279,
+      "second": 0.09554811649844433,
+      "unknown": true
+    },
+    {
+      "file": "negative-128.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09433701356856829,
+      "second": 0.09423730595829675,
+      "unknown": true
+    },
+    {
+      "file": "negative-129.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.09285083119407017,
+      "second": 0.09276001542250537,
+      "unknown": true
+    },
+    {
+      "file": "negative-130.png",
+      "kind": "cartoon_face",
+      "top": "奶粉",
+      "confidence": 0.09558721096406035,
+      "second": 0.09528141593699649,
+      "unknown": true
+    },
+    {
+      "file": "negative-131.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09845654616122328,
+      "second": 0.09287131526123556,
+      "unknown": true
+    },
+    {
+      "file": "negative-132.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.0927333809804413,
+      "second": 0.09205469181200832,
+      "unknown": true
+    },
+    {
+      "file": "negative-133.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09387386332318255,
+      "second": 0.09314270412155477,
+      "unknown": true
+    },
+    {
+      "file": "negative-134.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09372129676565946,
+      "second": 0.09262686813388031,
+      "unknown": true
+    },
+    {
+      "file": "negative-135.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.10022329426743301,
+      "second": 0.09678810735674248,
+      "unknown": true
+    },
+    {
+      "file": "negative-136.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09320955620627303,
+      "second": 0.0927961469476213,
+      "unknown": true
+    },
+    {
+      "file": "negative-137.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09441465992967085,
+      "second": 0.09429841488079946,
+      "unknown": true
+    },
+    {
+      "file": "negative-138.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09586704359336833,
+      "second": 0.09236978062295345,
+      "unknown": true
+    },
+    {
+      "file": "negative-139.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09668723323956038,
+      "second": 0.09549897923207937,
+      "unknown": true
+    },
+    {
+      "file": "negative-140.png",
+      "kind": "cartoon_face",
+      "top": "奶猫",
+      "confidence": 0.09609591315439538,
+      "second": 0.09229980927171194,
+      "unknown": true
+    },
+    {
+      "file": "negative-141.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09310337613498564,
+      "second": 0.09289812150473185,
+      "unknown": true
+    },
+    {
+      "file": "negative-142.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09490868014402314,
+      "second": 0.09333065725716483,
+      "unknown": true
+    },
+    {
+      "file": "negative-143.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09385296535327496,
+      "second": 0.09286053199845828,
+      "unknown": true
+    },
+    {
+      "file": "negative-144.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09516791499762305,
+      "second": 0.09415606361703419,
+      "unknown": true
+    },
+    {
+      "file": "negative-145.png",
+      "kind": "cartoon_face",
+      "top": "奶蛋",
+      "confidence": 0.09367066174656029,
+      "second": 0.09360804782956185,
+      "unknown": true
+    },
+    {
+      "file": "negative-146.png",
+      "kind": "cartoon_face",
+      "top": "奶鸡",
+      "confidence": 0.09294450997501874,
+      "second": 0.09274652981431059,
+      "unknown": true
+    },
+    {
+      "file": "negative-147.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09346275452993812,
+      "second": 0.09200628449816818,
+      "unknown": true
+    },
+    {
+      "file": "negative-148.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09392176486292456,
+      "second": 0.09212204109365205,
+      "unknown": true
+    },
+    {
+      "file": "negative-149.png",
+      "kind": "cartoon_face",
+      "top": "奶蛋",
+      "confidence": 0.09735105649224068,
+      "second": 0.09500435985963676,
+      "unknown": true
+    },
+    {
+      "file": "negative-150.png",
+      "kind": "cartoon_face",
+      "top": "奶猫",
+      "confidence": 0.09391978037027342,
+      "second": 0.09332868165362511,
+      "unknown": true
+    },
+    {
+      "file": "negative-151.png",
+      "kind": "cartoon_face",
+      "top": "奶粉",
+      "confidence": 0.0942517143521958,
+      "second": 0.09327512217407874,
+      "unknown": true
+    },
+    {
+      "file": "negative-152.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09372547863790244,
+      "second": 0.09257336013608194,
+      "unknown": true
+    },
+    {
+      "file": "negative-153.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.09406796124378537,
+      "second": 0.09305132243656429,
+      "unknown": true
+    },
+    {
+      "file": "negative-154.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09406883233797846,
+      "second": 0.09354380611642917,
+      "unknown": true
+    },
+    {
+      "file": "negative-155.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09330594954189851,
+      "second": 0.0920197611324542,
+      "unknown": true
+    },
+    {
+      "file": "negative-156.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09543448866188928,
+      "second": 0.09386105556425638,
+      "unknown": true
+    },
+    {
+      "file": "negative-157.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09408790972657737,
+      "second": 0.09362777783925104,
+      "unknown": true
+    },
+    {
+      "file": "negative-158.png",
+      "kind": "cartoon_face",
+      "top": "奶蛋",
+      "confidence": 0.09448710027933277,
+      "second": 0.09446486017838622,
+      "unknown": true
+    },
+    {
+      "file": "negative-159.png",
+      "kind": "cartoon_face",
+      "top": "豆奶",
+      "confidence": 0.09749446947133464,
+      "second": 0.09571406381092504,
+      "unknown": true
+    },
+    {
+      "file": "negative-160.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09348460428853467,
+      "second": 0.09319389906870583,
+      "unknown": true
+    },
+    {
+      "file": "negative-161.png",
+      "kind": "cartoon_face",
+      "top": "奶猫",
+      "confidence": 0.09423018439408402,
+      "second": 0.09259322233069991,
+      "unknown": true
+    },
+    {
+      "file": "negative-162.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.1075628071192158,
+      "second": 0.10070886860135692,
+      "unknown": true
+    },
+    {
+      "file": "negative-163.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09659818825539132,
+      "second": 0.09262092925564448,
+      "unknown": true
+    },
+    {
+      "file": "negative-164.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09807044346837945,
+      "second": 0.09424483739815762,
+      "unknown": true
+    },
+    {
+      "file": "negative-165.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.09456092718644675,
+      "second": 0.09380221727393245,
+      "unknown": true
+    },
+    {
+      "file": "negative-166.png",
+      "kind": "cartoon_face",
+      "top": "奶猫",
+      "confidence": 0.09449190635045959,
+      "second": 0.09435924329949284,
+      "unknown": true
+    },
+    {
+      "file": "negative-167.png",
+      "kind": "cartoon_face",
+      "top": "奶蛋",
+      "confidence": 0.09300150827010083,
+      "second": 0.0928569469680212,
+      "unknown": true
+    },
+    {
+      "file": "negative-168.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09805935732204339,
+      "second": 0.09483105868182422,
+      "unknown": true
+    },
+    {
+      "file": "negative-169.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09376918268328686,
+      "second": 0.0930849528375046,
+      "unknown": true
+    },
+    {
+      "file": "negative-170.png",
+      "kind": "cartoon_face",
+      "top": "奶蛙",
+      "confidence": 0.09324374186105845,
+      "second": 0.09246572074805365,
+      "unknown": true
+    },
+    {
+      "file": "negative-171.png",
+      "kind": "cartoon_face",
+      "top": "奶蛋",
+      "confidence": 0.09515118265465021,
+      "second": 0.09487806541842454,
+      "unknown": true
+    },
+    {
+      "file": "negative-172.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09878875223503611,
+      "second": 0.09375560383894287,
+      "unknown": true
+    },
+    {
+      "file": "negative-173.png",
+      "kind": "cartoon_face",
+      "top": "奶鼠",
+      "confidence": 0.09418356233494486,
+      "second": 0.09310494541082197,
+      "unknown": true
+    },
+    {
+      "file": "negative-174.png",
+      "kind": "cartoon_face",
+      "top": "奶龙",
+      "confidence": 0.09661137804876932,
+      "second": 0.0934377577347853,
+      "unknown": true
+    },
+    {
+      "file": "negative-175.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09665768910665956,
+      "second": 0.09405038391620497,
+      "unknown": true
+    },
+    {
+      "file": "negative-176.png",
+      "kind": "cartoon_face",
+      "top": "小奶",
+      "confidence": 0.09511586554279948,
+      "second": 0.0948958858351997,
+      "unknown": true
+    },
+    {
+      "file": "negative-177.png",
+      "kind": "cartoon_face",
+      "top": "奶猫",
+      "confidence": 0.09774422686067488,
+      "second": 0.09382946434599512,
+      "unknown": true
+    },
+    {
+      "file": "negative-178.png",
+      "kind": "cartoon_face",
+      "top": "奶猫",
+      "confidence": 0.09373298822648365,
+      "second": 0.09365327616882053,
+      "unknown": true
+    },
+    {
+      "file": "negative-179.png",
+      "kind": "cartoon_face",
+      "top": "奶狗",
+      "confidence": 0.09573689176623779,
+      "second": 0.09450122384567042,
+      "unknown": true
+    },
+    {
+      "file": "known-000.png",
+      "kind": "known",
+      "expected": "奶史",
+      "top": "奶史",
+      "confidence": 0.9703274862891191,
+      "second": 0.00443599046375543,
+      "unknown": false
+    },
+    {
+      "file": "known-001.png",
+      "kind": "known",
+      "expected": "奶史",
+      "top": "奶史",
+      "confidence": 0.9320324334166755,
+      "second": 0.012859040022991028,
+      "unknown": false
+    },
+    {
+      "file": "known-002.png",
+      "kind": "known",
+      "expected": "奶史",
+      "top": "奶史",
+      "confidence": 0.9266155264706755,
+      "second": 0.013959774948372076,
+      "unknown": false
+    },
+    {
+      "file": "known-003.png",
+      "kind": "known",
+      "expected": "奶狗",
+      "top": "奶狗",
+      "confidence": 0.8733276251774954,
+      "second": 0.041493870920950686,
+      "unknown": false
+    },
+    {
+      "file": "known-004.png",
+      "kind": "known",
+      "expected": "奶狗",
+      "top": "奶狗",
+      "confidence": 0.9899766264353491,
+      "second": 0.002262479559347741,
+      "unknown": false
+    },
+    {
+      "file": "known-005.png",
+      "kind": "known",
+      "expected": "奶狗",
+      "top": "奶狗",
+      "confidence": 0.9890740273209546,
+      "second": 0.0026474264132860807,
+      "unknown": false
+    },
+    {
+      "file": "known-006.png",
+      "kind": "known",
+      "expected": "奶猫",
+      "top": "奶猫",
+      "confidence": 0.6030684630083925,
+      "second": 0.10811881045997267,
+      "unknown": false
+    },
+    {
+      "file": "known-007.png",
+      "kind": "known",
+      "expected": "奶猫",
+      "top": "奶鸡",
+      "confidence": 0.16235755799876694,
+      "second": 0.1483416876266672,
+      "unknown": true
+    },
+    {
+      "file": "known-008.png",
+      "kind": "known",
+      "expected": "奶猫",
+      "top": "奶猫",
+      "confidence": 0.4711269159729773,
+      "second": 0.11227571476841586,
+      "unknown": false
+    },
+    {
+      "file": "known-009.png",
+      "kind": "known",
+      "expected": "奶粉",
+      "top": "奶粉",
+      "confidence": 0.9690553740245759,
+      "second": 0.008980967910436186,
+      "unknown": false
+    },
+    {
+      "file": "known-010.png",
+      "kind": "known",
+      "expected": "奶粉",
+      "top": "奶粉",
+      "confidence": 0.9580160717421713,
+      "second": 0.0118447905032681,
+      "unknown": false
+    },
+    {
+      "file": "known-011.png",
+      "kind": "known",
+      "expected": "奶粉",
+      "top": "奶粉",
+      "confidence": 0.8962644455420841,
+      "second": 0.02320886305513203,
+      "unknown": false
+    },
+    {
+      "file": "known-012.png",
+      "kind": "known",
+      "expected": "奶蛋",
+      "top": "奶蛋",
+      "confidence": 0.9778812990093236,
+      "second": 0.0032423547703622877,
+      "unknown": false
+    },
+    {
+      "file": "known-013.png",
+      "kind": "known",
+      "expected": "奶蛋",
+      "top": "奶蛋",
+      "confidence": 0.9909322080289752,
+      "second": 0.0017036934922114806,
+      "unknown": false
+    },
+    {
+      "file": "known-014.png",
+      "kind": "known",
+      "expected": "奶蛋",
+      "top": "奶蛋",
+      "confidence": 0.9430316949842741,
+      "second": 0.008873396336827313,
+      "unknown": false
+    },
+    {
+      "file": "known-015.png",
+      "kind": "known",
+      "expected": "奶蛙",
+      "top": "奶蛙",
+      "confidence": 0.9756409292749879,
+      "second": 0.004242979437360582,
+      "unknown": false
+    },
+    {
+      "file": "known-016.png",
+      "kind": "known",
+      "expected": "奶蛙",
+      "top": "奶蛙",
+      "confidence": 0.9535580629430801,
+      "second": 0.009384308966829312,
+      "unknown": false
+    },
+    {
+      "file": "known-017.png",
+      "kind": "known",
+      "expected": "奶蛙",
+      "top": "奶蛙",
+      "confidence": 0.975753155389083,
+      "second": 0.004522384756598423,
+      "unknown": false
+    },
+    {
+      "file": "known-018.png",
+      "kind": "known",
+      "expected": "奶鸡",
+      "top": "奶鸡",
+      "confidence": 0.9567406049350621,
+      "second": 0.00692894833090324,
+      "unknown": false
+    },
+    {
+      "file": "known-019.png",
+      "kind": "known",
+      "expected": "奶鸡",
+      "top": "奶鸡",
+      "confidence": 0.9893997328577857,
+      "second": 0.0020057190187516795,
+      "unknown": false
+    },
+    {
+      "file": "known-020.png",
+      "kind": "known",
+      "expected": "奶鸡",
+      "top": "奶鸡",
+      "confidence": 0.841732749624395,
+      "second": 0.026996020915163513,
+      "unknown": false
+    },
+    {
+      "file": "known-021.png",
+      "kind": "known",
+      "expected": "奶鼠",
+      "top": "奶鼠",
+      "confidence": 0.9840388651712865,
+      "second": 0.003967324214455451,
+      "unknown": false
+    },
+    {
+      "file": "known-022.png",
+      "kind": "known",
+      "expected": "奶鼠",
+      "top": "奶鼠",
+      "confidence": 0.8878126453237553,
+      "second": 0.02576954387827769,
+      "unknown": false
+    },
+    {
+      "file": "known-023.png",
+      "kind": "known",
+      "expected": "奶鼠",
+      "top": "奶鼠",
+      "confidence": 0.987370354439449,
+      "second": 0.0032479482776141015,
+      "unknown": false
+    },
+    {
+      "file": "known-024.png",
+      "kind": "known",
+      "expected": "奶龙",
+      "top": "奶龙",
+      "confidence": 0.9707097449303143,
+      "second": 0.0051668962790667045,
+      "unknown": false
+    },
+    {
+      "file": "known-025.png",
+      "kind": "known",
+      "expected": "奶龙",
+      "top": "奶龙",
+      "confidence": 0.9165497205526563,
+      "second": 0.028029963916218543,
+      "unknown": false
+    },
+    {
+      "file": "known-026.png",
+      "kind": "known",
+      "expected": "奶龙",
+      "top": "奶龙",
+      "confidence": 0.9710029395630094,
+      "second": 0.005744347746827793,
+      "unknown": false
+    },
+    {
+      "file": "known-027.png",
+      "kind": "known",
+      "expected": "小奶",
+      "top": "小奶",
+      "confidence": 0.9780144777993323,
+      "second": 0.0038223834091887406,
+      "unknown": false
+    },
+    {
+      "file": "known-028.png",
+      "kind": "known",
+      "expected": "小奶",
+      "top": "小奶",
+      "confidence": 0.9380781067143843,
+      "second": 0.010771374399453363,
+      "unknown": false
+    },
+    {
+      "file": "known-029.png",
+      "kind": "known",
+      "expected": "小奶",
+      "top": "小奶",
+      "confidence": 0.9796216769071362,
+      "second": 0.004113006395601785,
+      "unknown": false
+    },
+    {
+      "file": "known-030.png",
+      "kind": "known",
+      "expected": "豆奶",
+      "top": "豆奶",
+      "confidence": 0.9609125133309452,
+      "second": 0.007463812285519603,
+      "unknown": false
+    },
+    {
+      "file": "known-031.png",
+      "kind": "known",
+      "expected": "豆奶",
+      "top": "豆奶",
+      "confidence": 0.9807243651835652,
+      "second": 0.0036252869269534247,
+      "unknown": false
+    },
+    {
+      "file": "known-032.png",
+      "kind": "known",
+      "expected": "豆奶",
+      "top": "豆奶",
+      "confidence": 0.9684524374046029,
+      "second": 0.006363922403050297,
+      "unknown": false
+    }
+  ],
+  "acceptance_rule": {
+    "minTopScoreRatio": 1.5,
+    "minConfidence": 0.25,
+    "bothStrict": true
+  }
+}

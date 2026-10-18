@@ -1,10 +1,10 @@
-<!doctype html><meta charset="utf-8"><title>v1.2 浏览器模型验证</title>
+<!doctype html><meta charset="utf-8"><title>v1.2.1 浏览器模型验证</title>
 <style>body{font-family:system-ui;max-width:1000px;margin:40px auto;background:#f4f7fa;color:#17324d}button{padding:12px 24px}pre{white-space:pre-wrap;line-height:1.7;background:white;padding:25px;border-radius:12px}h1{font-size:27px}</style>
-<h1>v1.2 · 浏览器推断验证</h1><p>实际使用 Canvas 预处理、ONNX Runtime WASM 和 1.5 倍拒判规则；已知图像为预处理后的独立测试集。</p>
+<h1>v1.2.1 · 浏览器推断验证</h1><p>实际使用 Canvas 预处理、ONNX Runtime WASM 和 1.5 倍 + 超过 25% 的拒判规则；已知图像为预处理后的独立测试集。</p>
 <button id="run">运行保留测试集</button><p id="progress">待开始</p><pre id="result"></pre>
 <script src="../vendor/ort.wasm.min.js"></script>
 <script type="module">
-import {recognize} from '../inference.js?v=20261018-v12';
+import {recognize} from '../inference.js?v=20261019-v121';
 const config=await(await fetch('../model-config.json',{cache:'no-cache'})).json();
 const cases=await(await fetch('./cases.json')).json();
 document.querySelector('#run').onclick=async()=>{
@@ -28,7 +28,7 @@ document.querySelector('#run').onclick=async()=>{
   }
   document.querySelector('#progress').textContent='完成';
   const summary={...report};delete summary.rows;document.querySelector('#result').textContent=JSON.stringify(summary,null,2);
-  const link=document.createElement('a');link.textContent='下载完整验证报告';link.download='v12-browser-evaluation.json';link.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));document.body.append(link);
+  const link=document.createElement('a');link.textContent='下载完整验证报告';link.download='v121-browser-evaluation.json';link.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));document.body.append(link);
  }catch(error){document.querySelector('#result').textContent=String(error);document.querySelector('#progress').textContent='验证失败';}
 };
 </script>

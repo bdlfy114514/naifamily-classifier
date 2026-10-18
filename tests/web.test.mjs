@@ -37,11 +37,16 @@ test('invalid model outputs fail instead of inventing a prediction', () => {
   assert.throws(()=>summarizeScores(config.classes.map(()=>NaN),config));
 });
 
-test('acceptance depends only on a strict 1.5 top-two ratio', () => {
+test('acceptance requires both strict 1.5 ratio and strict 25 percent confidence', () => {
   assert.equal(config.minTopScoreRatio, 1.5);
+  assert.equal(config.minConfidence, 0.25);
   assert.equal('unknownThreshold' in config, false);
   for (const [first, second, expectedUnknown] of [
-    [0.30, 0.15, false], // Below the old 40% cutoff, but a clear winner.
+    [0.30, 0.15, false],
+    [0.24, 0.10, true], // Clear winner but below 25%.
+    [0.25, 0.10, true], // Exactly 25% is rejected.
+    [0.2501, 0.10, false],
+    [0.30, 0.21, true], // Above 25% but insufficient lead. // Below the old 40% cutoff, but a clear winner.
     [0.60, 0.40, true], // Exactly 1.5 times is rejected.
     [0.59, 0.40, true], // High absolute score is insufficient.
     [0.61, 0.39, false],

@@ -10,7 +10,7 @@ import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-OWNER = 'bdlfy114514'
+OWNER = 'bdlfy123'
 REPOSITORY = 'naifamily-classifier'
 REMOTE = f'https://github.com/{OWNER}/{REPOSITORY}.git'
 TRACKED = ['.gitignore','README.md','TRAINING_QUICKSTART.md','LICENSE','reports','package.json','common.py','model.py','preprocess.py',
@@ -28,14 +28,18 @@ def git(*args, check=True):
 
 
 def credentials():
-    result = subprocess.run(['git','-c','credential.interactive=never','credential','fill'],
-        input=f'protocol=https\nhost=github.com\nusername={OWNER}\n\n', capture_output=True,
-        text=True, cwd=ROOT, timeout=30,
-        env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GCM_INTERACTIVE':'never'})
-    if result.returncode:
-        return None
-    fields = dict(line.split('=',1) for line in result.stdout.splitlines() if '=' in line)
-    return fields.get('password')
+    # GCM may still index an existing token under the account's former username.
+    for username in (OWNER, 'bdlfy114514'):
+        result = subprocess.run(['git','-c','credential.interactive=never','credential','fill'],
+            input=f'protocol=https\nhost=github.com\nusername={username}\n\n', capture_output=True,
+            text=True, cwd=ROOT, timeout=30,
+            env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GCM_INTERACTIVE':'never'})
+        if result.returncode:
+            continue
+        fields = dict(line.split('=',1) for line in result.stdout.splitlines() if '=' in line)
+        if fields.get('password'):
+            return fields['password']
+    return None
 
 
 def api(token, path, method='GET', data=None, allowed=(200,201,202,204)):
@@ -61,7 +65,7 @@ def main():
     args = parser.parse_args()
     token = credentials()
     if not token:
-        print(json.dumps({'authenticated':False,'next':'git credential-manager github login --device --no-ui --username bdlfy114514'}))
+        print(json.dumps({'authenticated':False,'next':'git credential-manager github login --device --no-ui --username bdlfy123'}))
         raise SystemExit(2)
     _, account = api(token,'/user')
     if account['login'].lower() != OWNER.lower():

@@ -1,21 +1,22 @@
-import {loadSession, recognize} from './inference.js?v=20261018-v12';
+import {loadSession, recognize} from './inference.js?v=20261019-v121';
 
 const $ = id => document.getElementById(id);
 const asset = path => new URL(path, import.meta.url).href;
 const percent = value => `${(value * 100).toFixed(1)}%`;
 const descriptions = {
-  '奶史': '一圈一圈的快乐，堆成了最有辨识度的模样。',
-  '奶狗': '耳朵软软的，快乐也是。今天也要摇摇尾巴！',
-  '奶猫': '安静地可爱一下，偶尔再偷偷卖个萌。',
-  '奶粉': '粉粉嫩嫩，连空气都变得软乎乎。',
-  '奶蛋': '圆滚滚的小太阳，把今天的好心情打包。',
-  '奶蛙': '肚皮一挺，快乐出击。奶门的经典成员来了！',
-  '奶鸡': '精神抖擞的小鸡冠，今天也要元气满满。',
-  '奶鼠': '大大的耳朵，小小的身体，装满了好奇心。',
-  '奶龙': '熟悉的奶龙登场，这份快乐必须认领。',
-  '小奶': '小小一只，不用做什么，出现就已经很治愈。',
-  '豆奶': '奶家人的特别来宾，把奇妙和可爱一起带来。'
+  "奶龙": "好像有点唐",
+  "奶蛙": "谁才是奶龙？",
+  "奶鼠": "奶鼠奶鼠！",
+  "奶粉": "谁能告诉我哪里有奶鼠？",
+  "奶蛋": "有轮椅不选？",
+  "奶狗": "这种粘鞋底最难扣了",
+  "奶猫": "喵~",
+  "奶鸡": "咯咯咯",
+  "豆奶": "我用最准确最直白最不绕弯子的方式告诉你：这是沙子",
+  "小奶": "你是奶龙还是奶蛙？",
+  "奶史": "奶香味的奶史。"
 };
+
 let config, configPromise, selectedFile, previewURL, busy = false, imageVersion = 0, modelReady = false;
 
 function errorMessage(message = '') {

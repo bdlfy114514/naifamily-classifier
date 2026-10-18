@@ -35,7 +35,7 @@ def main():
     config=json.loads((ROOT/'docs/model-config.json').read_text(encoding='utf8'));ratio=config['minTopScoreRatio']
     def accepted(logits):
         p=np.exp(logits-logits.max(1,keepdims=True));p/=p.sum(1,keepdims=True)
-        top=np.sort(p,axis=1)[:,-2:];return top[:,1]>ratio*top[:,0]
+        top=np.sort(p,axis=1)[:,-2:];return (top[:,1]>ratio*top[:,0]) & (top[:,1]>config['minConfidence'])
     np.testing.assert_array_equal(a.argmax(1),e.argmax(1))
     np.testing.assert_array_equal(accepted(a),accepted(e))
     result=dict(total=len(ds),max_logit_error=float(np.abs(a-e).max()),same_top1=True,same_rejections=True,

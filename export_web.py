@@ -72,26 +72,28 @@ def main():
     val_prob = np.exp(val_logits-val_logits.max(1,keepdims=True))
     val_prob /= val_prob.sum(1,keepdims=True)
     min_top_score_ratio = 1.5
+    min_confidence = .25
     metadata = {
         'schemaVersion': 1, 'classes': class_assets, 'inputSize': size,
         'mean': list(checkpoint['normalization']['mean']), 'std': list(checkpoint['normalization']['std']),
         'crop': checkpoint['preprocess']['default_crop'], 'background': checkpoint['preprocess']['background'],
         'model': 'assets/naifamily.onnx', 'modelBytes': output.stat().st_size,
         'modelSha256': hashlib.sha256(output.read_bytes()).hexdigest(),
-        'minTopScoreRatio': min_top_score_ratio, 'fallbackClass': '小奶',
+        'minTopScoreRatio': min_top_score_ratio, 'minConfidence': min_confidence, 'fallbackClass': '小奶',
         'unknownMessage': 'ops! 您上传的的图片中似乎没有奶家人',
         'metrics': {'correct': correct, 'total': len(labels), 'accuracy': correct/len(labels)},
         'source': {'architecture': checkpoint['model_config']['arch'], 'bestEpoch': checkpoint['epoch'],
                    'trainingMethod': checkpoint.get('method', 'supervised_transfer'),
-                   'version': 'v1.2'},
+                   'version': 'v1.2.1', 'weightsVersion': 'v1.2'},
     }
     write_json(args.output/'model-config.json', metadata)
     report = {
         'maxAbsLogitError': float(np.max(np.abs(torch_logits-onnx_logits))),
         'samePredictions': True, 'onnxTestCorrect': correct, 'testTotal': len(labels),
-        'minTopScoreRatio': min_top_score_ratio,
-        'validationAccepted': int((np.sort(val_prob, axis=1)[:, -1] >
-                                   np.sort(val_prob, axis=1)[:, -2] * min_top_score_ratio).sum()),
+        'minTopScoreRatio': min_top_score_ratio, 'minConfidence': min_confidence,
+        'validationAccepted': int(((np.sort(val_prob, axis=1)[:, -1] >
+                                   np.sort(val_prob, axis=1)[:, -2] * min_top_score_ratio) &
+                                   (val_prob.max(axis=1) > min_confidence)).sum()),
         'validationTotal': len(val), 'modelSha256': metadata['modelSha256'],
         'note': '分数比规则不等同于可靠未知检测；人脸负样本测试不覆盖所有未知输入。',
     }
