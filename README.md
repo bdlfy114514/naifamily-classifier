@@ -24,27 +24,23 @@ git clone https://github.com/bdlfy114514/naifamily-classifier.git
 cd naifamily-classifier
 ```
 
-仓库包含代码、静态网页、展示图、浏览器模型及依赖清单。训练数据、Python 最优权重、虚拟环境和训练缓存不随 Git 仓库提交。直接克隆仓库后，如需训练，应准备自己的数据并按第 3 节预处理，或使用下述完整训练包。
+仓库包含代码、静态网页、展示图、浏览器模型及依赖清单。训练数据、Python 最优权重、虚拟环境和训练缓存不随 Git 仓库提交。直接克隆仓库后，如需训练，应准备自己的数据并按第 3 节预处理，或分别获取下述脚本包与独立数据包。
 
-### 1.2 本地完整训练包
+### 1.2 训练脚本包与单独的数据包
 
-文件名：`naifamily-training-kit.zip`。从对应版本的 Release 获取训练包，或由维护者在本地 `dist/` 构建；历史版本的压缩包不会随网页更新自动变化。
+GitHub Release 的 `naifamily-training-kit.zip` **只包含必要的训练、预处理、测试脚本、负样本下载脚本、环境配置、依赖清单和使用说明**。不包含任何数据集、已训练权重、预训练缓存、日志、网页资源或虚拟环境。历史 `v1_0` 训练附件也调整为该版本的脚本包。
 
-训练包包含：
+数据由维护者在其他位置单独提供，文件名为 `naifamily-dataset-v1.2.zip`，不上传 GitHub Release，下载地址由维护者另行公布。它只包含当前训练数据：
 
-- 全部源代码、本文档、依赖清单和环境配置脚本；
-- `data_processed_v12/`：448 张处理后奶家人图片，train/val/test 分别为 382/33/33；
-- `hard_negatives/mixed_v12/`：1,200 张真实/卡通人脸负样本，train/val/test 分别为 840/180/180；
-- `runs/resnet18_v12/`：当前 v1.2 最优 Python 权重、训练日志、loss 曲线及评估报告；
-- `runs/resnet18_face_oe_v1/`：v1.1 权重与历史评估，用于对照；
-- `runs/resnet18_transfer_v1/`：微调前的基线权重与日志，供复现比较；
-- `.cache/torch/checkpoints/resnet18-f37072fd.pth`：预训练初始化权重，避免训练时再次下载；
-- 对应测试报告、网页文件、展示图和 ONNX 浏览器模型；
-- `KIT_MANIFEST.json`：包内各文件的大小和 SHA-256，用于完整性核验。
+- `data_processed_v12/`：448 张处理后奶家人图片，train/val/test 为 382/33/33；
+- `hard_negatives/mixed_v12/`：1,200 张真实/卡通人物负样本，train/val/test 为 840/180/180；
+- 各数据目录的 manifest、来源与归属说明，以及 `DATASET_MANIFEST.json` 文件哈希清单。
 
-解压后进入 `naifamily-training-kit/`，在该目录执行下文命令。不要对包内 `data_processed_v12/` 再次裁剪或缩放。最初的原始训练图片已删除，包内保留的是可直接用于训练的处理后数据。
+**将脚本包和数据包解压到同一个父目录，合并它们共同的 `naifamily-training-kit/` 目录。** 在该目录内，数据路径应直接是 `data_processed_v12/manifest.json` 和 `hard_negatives/mixed_v12/manifest.json`，不要再嵌套一层同名目录。处理后的正样本不必再次裁剪或缩放。
 
-压缩包不包含 Python 安装程序、显卡驱动、依赖安装包或 `.venv`。这些环境文件不可跨电脑直接复用；首次配置依赖需要联网。安装完成后，包内数据及初始化权重可用于本地训练。
+优先按 [TRAINING_QUICKSTART.md](TRAINING_QUICKSTART.md) 从头训练：先使用 train.py 从 ImageNet 初始化训练已知类别，再把自己产生的 best.pt 交给负样本微调脚本。脚本包不提供 README 历史实验中提到的旧权重；这些历史继续训练命令需要自行提供相应权重。脚本包也不提供下文网页部署相关资源，网页开发请克隆完整仓库。
+
+首次配置 Python 3.12、显卡驱动、依赖和官方预训练初始化权重需要联网；.venv 不可跨电脑直接复用。两个包均带独立 SHA-256 校验文件。维护者在本地执行 `scripts/package_training.py` 可分别重建脚本包和数据包，后者仅用于自行分发。
 
 ## 2. 配置运行环境
 
@@ -113,7 +109,7 @@ CUDA/XPU 安装时，应选择 PyTorch 官方提供、与当前操作系统和�
 
 ## 3. 准备数据
 
-### 3.1 使用训练包内的数据
+### 3.1 使用单独数据包中的数据
 
 确认根目录中存在 `data_processed_v12/manifest.json`，且该数据目录内存在 `train/`、`val/`、`test/` 子目录，即可直接进入第 4 节。训练和测试会验证图片尺寸、像素哈希、类别映射与划分信息。
 
@@ -147,7 +143,7 @@ CUDA/XPU 安装时，应选择 PyTorch 官方提供、与当前操作系统和�
 - **数据清单**：`manifest.json` 记录类别映射、原始来源相对路径、处理后路径、划分及像素 SHA-256。当前批次未发现完全重复副本；像素哈希不能自动排除不同截图或轻微改动形成的近重复样本。
 - **增强范围**：只在读取训练集时进行水平翻转、轻量旋转、平移、缩放及颜色扰动，不额外增加清单中的样本数。验证和测试保持固定输入。
 
-`show/` 用作网页展示和交互示例，不作为额外的独立评测集，也不重复计入上述 448 张统计。最初原始未处理图片已删除，新一批原图保留在本地 `new_data/`；训练包提供处理后图片；仅克隆源码仓库不会获得这批训练数据。
+`show/` 用作网页展示和交互示例，不作为额外的独立评测集，也不重复计入上述 448 张统计。最初原始未处理图片已删除，新一批原图保留在本地 `new_data/`；单独数据包提供处理后图片；仅克隆源码仓库不会获得这批训练数据。
 
 ### 3.2 使用自己的图片
 
@@ -312,7 +308,7 @@ raw_images/
 
 ## 6. 本地运行网页与更新浏览器模型
 
-仓库或训练包已包含网页所需全部静态资产。安装 Python 后即可预览：
+完整源码仓库包含网页所需静态资产；Release 的最小训练脚本包不包含网页。安装 Python 后即可预览：
 
 ```powershell
 .\.venv\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory docs
@@ -382,13 +378,13 @@ raw_images/
 .\.venv\Scripts\python.exe export_web.py --data data_processed_v12 --weights runs\local_v12\best.pt
 .\.venv\Scripts\python.exe scripts\verify_face_onnx.py --weights runs\local_v12\best.pt --negatives hard_negatives\mixed_v12
 
-# 单元检查、网页资产检查、重新构建本地训练包
+# 在完整源码仓库内：单元检查、网页检查、分别构建脚本包与数据包
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 node --test tests/web.test.mjs
 .\.venv\Scripts\python.exe scripts\package_training.py
 ```
 
-训练包已经含处理后数据和负样本时，不必重新下载。若训练自己的数据，须保持用于比较的验证/测试来源独立，避免同一参考图的派生图跨集合。上述继续训练脚本会校验现有类别顺序及保留验证/测试样本；从零构建新的分类任务请使用第 4 节的 `train.py`。
+独立数据包已经含处理后数据和负样本时，不必重新下载。若训练自己的数据，须保持用于比较的验证/测试来源独立，避免同一参考图的派生图跨集合。上述继续训练脚本会校验现有类别顺序及保留验证/测试样本；从零构建新的分类任务请使用第 4 节的 `train.py`。
 
 可选浏览器回归：执行 `scripts/build_browser_audit.py`，按第 6 节启动本机 HTTP 服务，访问 `/verification-temp/` 并运行保留测试集。它调用网页实际 Canvas/WASM 推断管线。生成页面及样本是本机临时文件，不纳入 Git 或训练压缩包。
 

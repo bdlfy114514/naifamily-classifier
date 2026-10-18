@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OWNER = 'bdlfy114514'
 REPOSITORY = 'naifamily-classifier'
 REMOTE = f'https://github.com/{OWNER}/{REPOSITORY}.git'
-TRACKED = ['.gitignore','README.md','LICENSE','reports','package.json','common.py','model.py','preprocess.py',
+TRACKED = ['.gitignore','README.md','TRAINING_QUICKSTART.md','LICENSE','reports','package.json','common.py','model.py','preprocess.py',
            'preprocess_config.json','train.py','test.py','export_web.py','setup_env.ps1',
            'requirements.txt','requirements-lock.txt','requirements-web.txt','scripts','tests','docs','show']
 
