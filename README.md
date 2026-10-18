@@ -30,7 +30,7 @@ cd naifamily-classifier
 
 GitHub Release 的 `naifamily-training-kit.zip` **只包含必要的训练、预处理、测试脚本、负样本下载脚本、环境配置、依赖清单和使用说明**。不包含任何数据集、已训练权重、预训练缓存、日志、网页资源或虚拟环境。历史 `v1_0` 训练附件也调整为该版本的脚本包。
 
-数据由维护者在其他位置单独提供，文件名为 `naifamily-dataset-v1.2.zip`，不上传 GitHub Release，下载地址由维护者另行公布。它只包含当前训练数据：
+网页模型使用的数据集数据集可通过以下链接获得：https://pan.quark.cn/s/484b64026c00，内部结构如下：
 
 - `data_processed_v12/`：448 张处理后奶家人图片，train/val/test 为 382/33/33；
 - `hard_negatives/mixed_v12/`：1,200 张真实/卡通人物负样本，train/val/test 为 840/180/180；
