@@ -33,7 +33,7 @@ def predict(model, batch, device):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--weights', type=Path, required=True)
-    p.add_argument('--data', type=Path, default=Path(__file__).parent/'data_processed')
+    p.add_argument('--data', type=Path, default=Path(__file__).parent/'data_processed_v12')
     p.add_argument('--device', choices=['auto', 'cuda', 'xpu', 'cpu'], default='auto')
     p.add_argument('--samples', type=int, default=12, help='随机展示数量；准确率始终基于完整测试集')
     p.add_argument('--batch-size', type=int, default=16)

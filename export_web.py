@@ -19,9 +19,9 @@ from preprocess import write_json
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--weights', type=Path, default=Path('runs/resnet18_face_oe_v1/best.pt'))
+    parser.add_argument('--weights', type=Path, default=Path('runs/resnet18_v12/best.pt'))
     parser.add_argument('--output', type=Path, default=Path('docs'))
-    parser.add_argument('--data', type=Path, default=Path('data_processed'))
+    parser.add_argument('--data', type=Path, default=Path('data_processed_v12'))
     args = parser.parse_args()
     torch.set_num_threads(2)
     checkpoint = torch.load(args.weights, map_location='cpu', weights_only=True)
@@ -82,7 +82,8 @@ def main():
         'unknownMessage': 'ops! 您上传的的图片中似乎没有奶家人',
         'metrics': {'correct': correct, 'total': len(labels), 'accuracy': correct/len(labels)},
         'source': {'architecture': checkpoint['model_config']['arch'], 'bestEpoch': checkpoint['epoch'],
-                   'trainingMethod': checkpoint.get('method', 'supervised_transfer')},
+                   'trainingMethod': checkpoint.get('method', 'supervised_transfer'),
+                   'version': 'v1.2'},
     }
     write_json(args.output/'model-config.json', metadata)
     report = {

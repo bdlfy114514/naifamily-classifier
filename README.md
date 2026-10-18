@@ -6,6 +6,15 @@
 - 源代码：[bdlfy114514/naifamily-classifier](https://github.com/bdlfy114514/naifamily-classifier)
 - 分类标签：奶史、奶狗、奶猫、奶粉、奶蛋、奶蛙、奶鸡、奶鼠、奶龙、小奶、豆奶。
 
+## 更新日志
+
+| 版本 | 更新内容 |
+| --- | --- |
+| v1.0 | 最初版本：11 类奶家人识别、训练与测试脚本及浏览器网页。 |
+| v1.0.1 | 前端拒判标准改为：第一名匹配度严格超过第二名的 50%（即 `p1 > 1.5 × p2`）才接受。 |
+| v1.1 | 强化训练，引入真实人脸负样本，修复真实人物被误判为豆奶的问题。 |
+| v1.2 | 扩充 220 张多来源生成样本，处理两像素尺寸差异，移除遮挡鸡冠的训练图；加入卡通人物负样本并重新训练。 |
+
 ## 1. 获取项目
 
 ### 1.1 源代码仓库
@@ -19,19 +28,21 @@ cd naifamily-classifier
 
 ### 1.2 本地完整训练包
 
-文件名：`naifamily-training-kit.zip`。该压缩包已上传至Release。
+文件名：`naifamily-training-kit.zip`。从对应版本的 Release 获取训练包，或由维护者在本地 `dist/` 构建；历史版本的压缩包不会随网页更新自动变化。
 
 训练包包含：
 
 - 全部源代码、本文档、依赖清单和环境配置脚本；
-- `data_processed/`：229 张已处理图片及固定划分，train/val/test 分别为 163/33/33；
-- `runs/resnet18_face_oe_v1/`：当前最优 Python 权重、人脸负样本微调日志、loss 曲线及评估报告；
+- `data_processed_v12/`：448 张处理后奶家人图片，train/val/test 分别为 382/33/33；
+- `hard_negatives/mixed_v12/`：1,200 张真实/卡通人脸负样本，train/val/test 分别为 840/180/180；
+- `runs/resnet18_v12/`：当前 v1.2 最优 Python 权重、训练日志、loss 曲线及评估报告；
+- `runs/resnet18_face_oe_v1/`：v1.1 权重与历史评估，用于对照；
 - `runs/resnet18_transfer_v1/`：微调前的基线权重与日志，供复现比较；
 - `.cache/torch/checkpoints/resnet18-f37072fd.pth`：预训练初始化权重，避免训练时再次下载；
 - 对应测试报告、网页文件、展示图和 ONNX 浏览器模型；
 - `KIT_MANIFEST.json`：包内各文件的大小和 SHA-256，用于完整性核验。
 
-解压后进入 `naifamily-training-kit/`，在该目录执行下文命令。不要对包内 `data_processed/` 再次裁剪或缩放。最初的原始训练图片已删除，包内保留的是可直接用于训练的处理后数据。
+解压后进入 `naifamily-training-kit/`，在该目录执行下文命令。不要对包内 `data_processed_v12/` 再次裁剪或缩放。最初的原始训练图片已删除，包内保留的是可直接用于训练的处理后数据。
 
 压缩包不包含 Python 安装程序、显卡驱动、依赖安装包或 `.venv`。这些环境文件不可跨电脑直接复用；首次配置依赖需要联网。安装完成后，包内数据及初始化权重可用于本地训练。
 
@@ -104,35 +115,39 @@ CUDA/XPU 安装时，应选择 PyTorch 官方提供、与当前操作系统和�
 
 ### 3.1 使用训练包内的数据
 
-确认根目录中存在 `data_processed/manifest.json` 和 `train/`、`val/`、`test/` 子目录，即可直接进入第 4 节。训练和测试会验证图片尺寸、像素哈希、类别映射与划分信息。
+确认根目录中存在 `data_processed_v12/manifest.json`，且该数据目录内存在 `train/`、`val/`、`test/` 子目录，即可直接进入第 4 节。训练和测试会验证图片尺寸、像素哈希、类别映射与划分信息。
 
-当前数据集由项目最初提供的角色图片经预处理得到，原始类别文件夹名用作标签。现存的 229 张处理后图片按类别统计如下；表中顺序同时是当前模型的输出索引顺序：
+当前 v1.2 正样本数据集保留原有验证/测试划分，新增 11 类各 20 张生成图片用于训练，并按用户说明移除 1 张遮挡鸡冠的奶鸡训练图，共 448 张。输出索引保持不变。
+
+为避免模型在上传的各类图片中准确率退化，数据集来自多渠道，具体为：约5%来自网络素材，5%由千问生成（Qwen-image），15%由Gemini生成（NanoBanana），25%由豆包生成（Seedream），50%由ChatGPT生成（Imagegen）
+
+上述比例是维护者提供的奶家人正样本来源估算，不包含另外列出的真实/卡通人脸负样本。
 
 | 输出索引 | 类别 | 训练集 | 验证集 | 测试集 | 合计 |
 | --- | --- | ---: | ---: | ---: | ---: |
-| 0 | 奶史 | 15 | 3 | 3 | 21 |
-| 1 | 奶狗 | 14 | 3 | 3 | 20 |
-| 2 | 奶猫 | 14 | 3 | 3 | 20 |
-| 3 | 奶粉 | 15 | 3 | 3 | 21 |
-| 4 | 奶蛋 | 14 | 3 | 3 | 20 |
-| 5 | 奶蛙 | 16 | 3 | 3 | 22 |
-| 6 | 奶鸡 | 15 | 3 | 3 | 21 |
-| 7 | 奶鼠 | 14 | 3 | 3 | 20 |
-| 8 | 奶龙 | 14 | 3 | 3 | 20 |
-| 9 | 小奶 | 16 | 3 | 3 | 22 |
-| 10 | 豆奶 | 16 | 3 | 3 | 22 |
-| 合计 | 11 类 | 163 | 33 | 33 | 229 |
+| 0 | 奶史 | 35 | 3 | 3 | 41 |
+| 1 | 奶狗 | 34 | 3 | 3 | 40 |
+| 2 | 奶猫 | 34 | 3 | 3 | 40 |
+| 3 | 奶粉 | 35 | 3 | 3 | 41 |
+| 4 | 奶蛋 | 34 | 3 | 3 | 40 |
+| 5 | 奶蛙 | 36 | 3 | 3 | 42 |
+| 6 | 奶鸡 | 34 | 3 | 3 | 40 |
+| 7 | 奶鼠 | 34 | 3 | 3 | 40 |
+| 8 | 奶龙 | 34 | 3 | 3 | 40 |
+| 9 | 小奶 | 36 | 3 | 3 | 42 |
+| 10 | 豆奶 | 36 | 3 | 3 | 42 |
+| 合计 | 11 类 | 382 | 33 | 33 | 448 |
 
 数据和标签的组织方式：
 
-- **任务类型**：单标签、整图分类，每张图片只有一个类别。没有目标边界框、分割掩码或“非奶家人”负类；网页的低匹配提示由后处理阈值实现。
+- **任务类型**：单标签、整图分类，每张图片只有一个类别。没有目标边界框或分割掩码。负样本通过异常样本暴露损失训练，不新增第 12 个输出类别；网页通过前二名分数比判定拒识。
 - **图片格式**：统一保存为 224×224 的 RGB PNG。原图经方向校正、透明背景合成、边缘裁剪，再等比例缩放并补白；训练时读取为 `(3, 224, 224)` 张量。
 - **输入归一化**：RGB 值先除以 255，再逐通道减去 mean `(0.485, 0.456, 0.406)`、除以 std `(0.229, 0.224, 0.225)`，与预训练主干的输入约定一致。
-- **划分方法**：固定种子 42，各类别分别随机划分，验证/测试目标比例各 15%，按类别四舍五入。实际每类验证和测试均为 3 张，其余进入训练，因此总数并非严格的 70%/15%/15%。
+- **划分方法**：固定种子 42，各类别分别随机划分，验证/测试目标比例各 15%，按类别四舍五入。最初每类验证和测试均为 3 张。v1.2 保留这些划分，新增相关生成图片全部加入训练，不把同批生成图随机拆进验证和测试。
 - **数据清单**：`manifest.json` 记录类别映射、原始来源相对路径、处理后路径、划分及像素 SHA-256。当前批次未发现完全重复副本；像素哈希不能自动排除不同截图或轻微改动形成的近重复样本。
 - **增强范围**：只在读取训练集时进行水平翻转、轻量旋转、平移、缩放及颜色扰动，不额外增加清单中的样本数。验证和测试保持固定输入。
 
-`show/` 用作网页展示和交互示例，不作为额外的独立评测集，也不重复计入上述 229 张统计。原始未处理图片已删除，训练包保留处理后图片；仅克隆源码仓库不会获得这批训练数据。
+`show/` 用作网页展示和交互示例，不作为额外的独立评测集，也不重复计入上述 448 张统计。最初原始未处理图片已删除，新一批原图保留在本地 `new_data/`；训练包提供处理后图片；仅克隆源码仓库不会获得这批训练数据。
 
 ### 3.2 使用自己的图片
 
@@ -168,6 +183,8 @@ raw_images/
 脚本执行 EXIF 方向校正、透明背景合成、裁边、等比例缩放补边至 224×224、完全重复图去重，以及按类别随机划分。原图不覆盖，输出目录必须为空。轻微改动的近重复图片需人工检查，避免进入不同集合。
 
 ## 4. 训练模型
+
+若要保留真实/卡通人物拒识能力，推荐第 7.2 节的负样本微调流程；本节 `train.py` 是仅监督 11 类正样本的通用训练入口。
 
 ### 4.1 网络架构
 
@@ -272,7 +289,7 @@ raw_images/
 ### 5.1 完整测试集评估
 
 ```powershell
-.\.venv\Scripts\python.exe test.py --weights runs\local_001\best.pt --data data_processed --device auto --samples 12 --output test_results\local_001
+.\.venv\Scripts\python.exe test.py --weights runs\local_001\best.pt --data data_processed_v12 --device auto --samples 12 --output test_results\local_001
 ```
 
 准确率始终基于完整测试集，`--samples` 只控制随机展示的图片数量。输出 `report.json` 和 `predictions.png`，报告包含总体/逐类准确率、全部预测和混淆矩阵；矩阵行是真实类别，列是预测类别。
@@ -282,7 +299,7 @@ raw_images/
 测试训练包内已保存的最优模型：
 
 ```powershell
-.\.venv\Scripts\python.exe test.py --weights runs\resnet18_face_oe_v1\best.pt --device auto --output test_results\verify_best
+.\.venv\Scripts\python.exe test.py --weights runs\resnet18_v12\best.pt --device auto --output test_results\verify_best
 ```
 
 ### 5.2 单张图片
@@ -307,7 +324,7 @@ raw_images/
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-web.txt
-.\.venv\Scripts\python.exe export_web.py --weights runs\local_001\best.pt --data data_processed
+.\.venv\Scripts\python.exe export_web.py --weights runs\local_001\best.pt --data data_processed_v12
 ```
 
 导出脚本验证 ONNX 与 PyTorch 在测试集上的数值和预测一致性，并生成模型 SHA-256 校验值。网页启动时核验模型文件完整性。展示图取自 `show/`，其中 `奶娃.png` 映射到“奶蛙”。页面对小奶图的右侧黑边作展示裁切，不改变原图或训练数据。
@@ -316,54 +333,68 @@ raw_images/
 
 
 
-## 7. 实测结果与适用范围
+## 7. v1.2 实测结果与复现
 
-固定数据划分为训练 163、验证 33、测试 33 张。默认 ResNet18 实验使用 XPU，在第 21 轮早停，第 9 轮的模型按验证集选为最优。
+当前网络保持 ResNet18 + Dropout(0.2) + Linear(512,11)。从 v1.1 最优权重继续训练，使用 382 张奶家人训练图和 840 张负样本训练图。原有验证/测试划分保持不变；新增生成图只用于训练，不把相关合成样本拆进验证或测试。
 
-| 模型 | 完整测试集准确率 |
-| --- | --- |
-| 原始轻量 CNN | 26/33 = 78.79% |
-| ResNet18 微调 | 32/33 = 96.97% |
-| 人脸负样本微调（当前网页模型） | 32/33 = 96.97% |
-| 当前 ONNX 导出模型 | 32/33 = 96.97%，与 PyTorch 预测一致 |
+### 7.1 保留测试集结果
 
-以上是未启用拒识时、当前固定划分的分类结果。网页启用分数比判定后会拒绝部分分数接近的已知类别；不能将该结果视为任意上传图片的准确率。测试集较小，每张图片约影响 3.03 个百分点，不同硬件或数据划分的结果也可能变化。本项目用于学习和娱乐。
+模型选择只使用验证集；训练结束后，在原有 33 张奶家人测试图及 180 张负样本测试图上比较 v1.1 和 v1.2：
 
-### 7.1 人脸负样本微调与复现
-
-早期模型将本次 LFW 保留测试集的 90 张人脸全部接受为豆奶。为此，当前模型采用 **Outlier Exposure（异常样本暴露）**，保留原来的 ResNet18 + Dropout(0.2) + Linear(512,11) 架构和 11 个类别，不增加“人脸”奶家人类别。
-
-负样本来自 [LFW 公开人脸数据](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_lfw_people.html)，使用 scikit-learn 官方源代码列出的 Figshare 镜像和 SHA-256 校验值。脚本随机选取 600 位不同人物，各一张图片，按身份划分为训练 420、验证 90、测试 90 张（seed=20261018）。身份及图像 SHA-256 不跨集合；原有 229 张奶家人和划分不变。图片仅用于非奶家人负样本训练，不训练人物身份识别。下载原始图像的使用与再分发应遵守源数据要求，Git 仓库不包含这些图片。
-
-训练损失为 `L = CE(已知奶家人, 标签, smoothing=0.05) + 1.0 × KL(Uniform(11) || Softmax(人脸负样本))`。当未知图片的类别分数趋于均匀时，第一名不会明显领先第二名，从而触发现有拒判规则。此方法参考 [Deep Anomaly Detection with Outlier Exposure](https://arxiv.org/abs/1812.04606)，这里没有使用强化学习。
-
-从原最优权重继续训练 24 轮，微调 Layer 3 / Layer 4 / 分类头，冻结 BatchNorm 运行统计，主干学习率 2e-5、分类头 2e-4、AdamW weight_decay=0.01、batch_size=16，余弦退火。仅用验证集的“已知样本正确接受率与负样本拒判率的平均值”选择模型，同分参考已知分类正确数及 CE loss；第 8 轮获选。保留测试集在选模结束后评估，不用于选超参数。
-
-| 保留测试指标 | 原模型 | 当前模型 |
+| 指标 | v1.1 | v1.2 |
 | --- | --- | --- |
-| 已知类别原始分类正确 | 32/33 | 32/33 |
-| 已知类别正确接受（含拒判） | 31/33 | 31/33 |
+| 奶家人原始分类正确 | 32/33 = 96.97% | 32/33 = 96.97% |
+| 奶家人正确接受（含拒判） | 31/33 | 32/33 |
 | 真豆奶正确接受 | 3/3 | 3/3 |
-| 未知人脸误接受为任意奶家人 | 90/90 | 0/90 |
-| 未知人脸误接受为豆奶 | 90/90 | 0/90 |
+| 真实人脸误接受为任意奶家人 | 0/90 | 0/90 |
+| 卡通人脸误接受为任意奶家人 | 31/90 | 0/90 |
+| 卡通人脸误接受为豆奶 | 6/90 | 0/90 |
 
-这些数字来自同一保留集合。样本较少，特别是豆奶只有 3 张测试图；不能保证对所有人脸、卡通人物、全身照片或未知生物都有效。部分负样本仍把豆奶排第一，但因分数接近而拒判，这是正常行为。网页仍严格使用 `p1 > 1.5 × p2`，没有额外调高门槛。
+测试集较小，奶家人每张约影响 3.03 个百分点；上述结果不能代表任意上传图片的准确率。Google Cartoon Set 是 2D 卡通头像，尚未覆盖所有动漫风格、3D 人物、全身角色或未知生物。真豆奶测试图只有 3 张。部分负样本即使豆奶仍排第一，也会因前两名分数接近而正确拒判。网页仍使用 `p1 > 1.5 × p2`，本次没有调高拒判门槛。
+
+[完整 v1.2 评估报告](reports/v12_evaluation.json) 记录保留测试集比较、训练数据摘要与 ONNX 验证；本地 `runs/resnet18_v12/` 提供 best.pt、history.json、loss_curve.png 和 evaluation.json。网页 ONNX 与 PyTorch 的数值、分类及拒判一致性分别核验。[实际浏览器 Canvas/WASM 报告](reports/v12_browser_evaluation.json) 中，卡通误接受为 0/90、真人误接受为 1/90、奶家人分类及正确接受均为 32/33、真豆奶正确接受为 3/3。该真人边界样本的前二名分数比约为 1.522；Canvas 与 Pillow 预处理差异会影响接近阈值的结果，浏览器数字与上表桌面端结果应分别理解。train loss 包含负样本损失，val loss 是已知类别 CE，两者定义不同。
+
+### 7.2 新数据处理与负样本训练
+
+新数据实际位于 `new_data/`，每类 20 张，共 220 张，原文件保留。40 张为 1254×1252，预处理时沿长边两侧各裁 1 像素成为 1252×1252；其余 1254×1254 图片不额外裁边。新图不套用旧截图的水印裁剪，随后统一等比缩放并补白到 RGB 224×224。合并清单标记 `synthetic`、`reference_group_id`、原始尺寸及裁剪记录。去重后新增 220 张；用户有意删除的 1 张奶鸡图因遮挡鸡冠而不恢复。
+
+真实负样本沿用 [LFW](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_lfw_people.html) 的 600 位不同人物，各一张图，按人物分组为 420/90/90。卡通负样本来自 [Google Cartoon Set](https://google.github.io/cartoonset/download.html)，抽取 600 个不同配置的头像，同样划分为 420/90/90，合计 1,200 张。下载脚本记录固定镜像、SHA-256、来源和划分，检查跨集合重复；Google 原存储不可访问时使用固定版本公开镜像并核验哈希。Cartoon Set 由 Google LLC 按 CC BY 4.0 提供，归属说明见负样本目录的 `ATTRIBUTION.txt`，项目 MIT 许可证不替代第三方图像许可。
+
+训练采用 [Outlier Exposure](https://arxiv.org/abs/1812.04606)：
+
+`L = CE(已知奶家人, 标签, smoothing=0.05) + 1.0 × KL(Uniform(11) || Softmax(负样本))`
+
+负样本不会成为第 12 个奶家人类别。微调 Layer 3 / Layer 4 / 分类头，冻结 BatchNorm 运行统计；AdamW、weight_decay=0.01、batch_size=16，主干学习率 3e-5、分类头 3e-4，余弦退火，共 30 轮，seed=20261018。选择指标为验证集“已知正确接受率”和“负样本拒判率”的平均值，同分再比较已知原始分类正确数和 CE；第 6 轮获选，测试集不参与选择。
 
 ```powershell
-# 下载并校验公开负样本，写入 hard_negatives/lfw；约 232 MiB 压缩下载
+# 合并新图；输出目录须为空。没有原始 new_data 时直接使用训练包内的处理后数据
+.\.venv\Scripts\python.exe scripts\merge_v12_dataset.py --source new_data --output data_processed_v12
+
+# 源码仓库用户需先准备自己的正样本；下载并校验公开负样本
 .\.venv\Scripts\python.exe scripts\prepare_face_negatives.py
+.\.venv\Scripts\python.exe scripts\prepare_cartoon_negatives.py
 
-# 从基线继续微调，输出目录必须为空
-.\.venv\Scripts\python.exe scripts\train_face_rejection.py --device auto --output runs\local_face_oe_001
+# 复现本轮训练；输出目录必须为空
+.\.venv\Scripts\python.exe scripts\train_face_rejection.py --data data_processed_v12 --weights runs\resnet18_face_oe_v1\best.pt --negatives hard_negatives\mixed_v12 --output runs\local_v12 --epochs 30 --lr 0.00003 --head-lr 0.0003
 
-# 导出自己训练的模型
-.\.venv\Scripts\python.exe export_web.py --weights runs\local_face_oe_001\best.pt
+# 测试、导出自己训练的权重，并验证负样本 ONNX 一致性
+.\.venv\Scripts\python.exe test.py --data data_processed_v12 --weights runs\local_v12\best.pt
+.\.venv\Scripts\python.exe export_web.py --data data_processed_v12 --weights runs\local_v12\best.pt
+.\.venv\Scripts\python.exe scripts\verify_face_onnx.py --weights runs\local_v12\best.pt --negatives hard_negatives\mixed_v12
 
-# 验证本项目当前权重与网页 ONNX 在人脸测试集上的一致性
-.\.venv\Scripts\python.exe scripts\verify_face_onnx.py
+# 单元检查、网页资产检查、重新构建本地训练包
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+node --test tests/web.test.mjs
+.\.venv\Scripts\python.exe scripts\package_training.py
 ```
 
-[reports/face_rejection_evaluation.json](reports/face_rejection_evaluation.json) 保存可在仓库查看的原模型与当前模型比较及 ONNX 核验；[浏览器端验证报告](reports/browser_face_evaluation.json) 另记录 Canvas + ONNX Runtime WASM 实测，同样为人脸 0/90 误接受、已知 32/33 分类正确、真豆奶 3/3 正确接受。本地还有 `runs/resnet18_face_oe_v1/evaluation.json`；`negative_manifest.json` 保存来源、分组、路径和校验信息；`history.json` 与 `loss_curve.png` 保存训练轨迹。曲线中的 train loss 包含负样本损失，val loss 是已知类别 CE，两者定义不同。当前训练包可在本地运行 `scripts/package_training.py` 重新生成，包含负样本、两份权重和新增脚本；GitHub Release 中此前上传的压缩包不自动替换。
+训练包已经含处理后数据和负样本时，不必重新下载。若训练自己的数据，须保持用于比较的验证/测试来源独立，避免同一参考图的派生图跨集合。上述继续训练脚本会校验现有类别顺序及保留验证/测试样本；从零构建新的分类任务请使用第 4 节的 `train.py`。
+
+可选浏览器回归：执行 `scripts/build_browser_audit.py`，按第 6 节启动本机 HTTP 服务，访问 `/verification-temp/` 并运行保留测试集。它调用网页实际 Canvas/WASM 推断管线。生成页面及样本是本机临时文件，不纳入 Git 或训练压缩包。
+
+### 7.3 历史基线
+
+最初轻量 CNN 为 26/33（78.79%）；ResNet18 迁移学习提升为 32/33（96.97%）。v1.1 在最初 229 张正样本和 LFW 负样本上微调 24 轮，第 8 轮获选，将真实人脸误接受从 90/90 降为 0/90，已知分类保持 32/33。历史报告保存在 [v1.1 评估](reports/face_rejection_evaluation.json) 与 [v1.1 浏览器验证](reports/browser_face_evaluation.json)，这些历史数字不代表 v1.2 的训练样本数量。本地保留旧权重用于对照。
 
 常见问题：
 

@@ -1,4 +1,4 @@
-import {summarizeScores} from './inference-utils.mjs?v=20261018-face-oe';
+import {summarizeScores} from './inference-utils.mjs?v=20261018-v12';
 
 const relativeURL = path => new URL(path, import.meta.url).href;
 let sessionPromise;

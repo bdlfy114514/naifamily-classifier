@@ -2,6 +2,7 @@
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
+import argparse
 import json
 import numpy as np
 import onnxruntime as ort
@@ -12,10 +13,15 @@ from preprocess import write_json
 
 def main():
     torch.set_num_threads(2)
-    weights=ROOT/'runs/resnet18_face_oe_v1/best.pt'
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--weights',type=Path,default=ROOT/'runs/resnet18_v12/best.pt')
+    p.add_argument('--negatives',type=Path,default=ROOT/'hard_negatives/mixed_v12')
+    p.add_argument('--output',type=Path,default=ROOT/'artifacts/v12_onnx_verification.json')
+    args=p.parse_args()
+    weights=args.weights
     c=torch.load(weights,map_location='cpu',weights_only=True)
     model=build_model(**c['model_config']).eval();model.load_state_dict(c['model_state'])
-    root=ROOT/'hard_negatives/lfw';m=json.loads((root/'manifest.json').read_text(encoding='utf8'))
+    root=args.negatives;m=json.loads((root/'manifest.json').read_text(encoding='utf8'))
     validate_negatives(root,m)
     ds=FaceNegatives(root,m,'test',c['preprocess'],c['normalization'])
     session=ort.InferenceSession(str(ROOT/'docs/assets/naifamily.onnx'),providers=['CPUExecutionProvider'])
@@ -34,6 +40,11 @@ def main():
     np.testing.assert_array_equal(accepted(a),accepted(e))
     result=dict(total=len(ds),max_logit_error=float(np.abs(a-e).max()),same_top1=True,same_rejections=True,
                 onnx_false_accepted=int(accepted(a).sum()),ratio=ratio)
-    write_json(ROOT/'artifacts/face_onnx_verification.json',result);print(json.dumps(result))
+    result['by_source']={}
+    for kind in sorted({r.get('source_kind','real_face') for r in ds.records}):
+        mask=np.array([r.get('source_kind','real_face')==kind for r in ds.records])
+        result['by_source'][kind]={'total':int(mask.sum()),'false_accepted':int((accepted(a)&mask).sum())}
+    args.output.parent.mkdir(parents=True,exist_ok=True)
+    write_json(args.output,result);print(json.dumps(result))
 
 if __name__=='__main__':main()

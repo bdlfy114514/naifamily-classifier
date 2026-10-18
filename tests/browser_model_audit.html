@@ -1,0 +1,34 @@
+<!doctype html><meta charset="utf-8"><title>v1.2 浏览器模型验证</title>
+<style>body{font-family:system-ui;max-width:1000px;margin:40px auto;background:#f4f7fa;color:#17324d}button{padding:12px 24px}pre{white-space:pre-wrap;line-height:1.7;background:white;padding:25px;border-radius:12px}h1{font-size:27px}</style>
+<h1>v1.2 · 浏览器推断验证</h1><p>实际使用 Canvas 预处理、ONNX Runtime WASM 和 1.5 倍拒判规则；已知图像为预处理后的独立测试集。</p>
+<button id="run">运行保留测试集</button><p id="progress">待开始</p><pre id="result"></pre>
+<script src="../vendor/ort.wasm.min.js"></script>
+<script type="module">
+import {recognize} from '../inference.js?v=20261018-v12';
+const config=await(await fetch('../model-config.json',{cache:'no-cache'})).json();
+const cases=await(await fetch('./cases.json')).json();
+document.querySelector('#run').onclick=async()=>{
+ document.querySelector('#run').disabled=true;
+ const report={modelSha256:config.modelSha256,version:config.source.version,knownTotal:0,knownRawCorrect:0,knownAcceptedCorrect:0,dounaiTotal:0,dounaiAcceptedCorrect:0,negativeBySource:{},rows:[]};
+ try{
+  for(const item of cases){
+   const blob=await(await fetch(item.file)).blob();
+   const settings=item.kind==='known'?{...config,crop:[0,0,0,0]}:config;
+   const r=await recognize(blob,settings);const top=r.topMatches[0];
+   if(item.kind==='known'){
+    report.knownTotal++;if(top.name===item.expected)report.knownRawCorrect++;
+    if(!r.unknown&&top.name===item.expected)report.knownAcceptedCorrect++;
+    if(item.expected==='豆奶'){report.dounaiTotal++;if(!r.unknown&&top.name==='豆奶')report.dounaiAcceptedCorrect++;}
+   }else{
+    const entry=report.negativeBySource[item.kind]??={total:0,falseAccepted:0,acceptedAsDounai:0};
+    entry.total++;if(!r.unknown)entry.falseAccepted++;if(!r.unknown&&top.name==='豆奶')entry.acceptedAsDounai++;
+   }
+   report.rows.push({...item,top:top.name,confidence:top.probability,second:r.topMatches[1].probability,unknown:r.unknown});
+   document.querySelector('#progress').textContent=`已完成 ${report.rows.length}/${cases.length}`;
+  }
+  document.querySelector('#progress').textContent='完成';
+  const summary={...report};delete summary.rows;document.querySelector('#result').textContent=JSON.stringify(summary,null,2);
+  const link=document.createElement('a');link.textContent='下载完整验证报告';link.download='v12-browser-evaluation.json';link.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));document.body.append(link);
+ }catch(error){document.querySelector('#result').textContent=String(error);document.querySelector('#progress').textContent='验证失败';}
+};
+</script>

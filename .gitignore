@@ -11,3 +11,8 @@ dist/
 *.pt
 
 hard_negatives/
+
+data_processed_v12/
+new_data/
+new_dataset/
+docs/verification-temp/

@@ -15,20 +15,22 @@ ROOT_FILES = ['README.md', 'LICENSE', '.gitignore', 'package.json', 'model.py', 
               'setup_env.ps1', 'requirements.txt', 'requirements-web.txt', 'requirements-lock.txt']
 DIRECTORIES = ['scripts', 'tests', 'reports', 'docs', 'show', 'data_processed',
                'runs/resnet18_transfer_v1', 'test_results/resnet18_transfer_v1',
-               'runs/resnet18_face_oe_v1', 'hard_negatives/lfw']
+               'runs/resnet18_face_oe_v1', 'hard_negatives/lfw',
+               'data_processed_v12', 'runs/resnet18_v12', 'hard_negatives/mixed_v12', 'test_results/resnet18_v12']
 PRETRAINED = '.cache/torch/checkpoints/resnet18-f37072fd.pth'
 
 
 def collect_files():
-    required = [*ROOT_FILES, 'data_processed/manifest.json',
+    required = [*ROOT_FILES, 'data_processed_v12/manifest.json',
+                'runs/resnet18_v12/best.pt', 'hard_negatives/mixed_v12/manifest.json',
                 'runs/resnet18_transfer_v1/best.pt', 'runs/resnet18_face_oe_v1/best.pt',
                 'hard_negatives/lfw/manifest.json', PRETRAINED]
     missing = [name for name in required if not (ROOT/name).is_file()]
     if missing:
         raise FileNotFoundError(f'训练包缺少必要文件：{missing}')
-    manifest = json.loads((ROOT/'data_processed/manifest.json').read_text(encoding='utf8'))
+    manifest = json.loads((ROOT/'data_processed_v12/manifest.json').read_text(encoding='utf8'))
     for record in manifest['records']:
-        if not (ROOT/'data_processed'/record['path']).is_file():
+        if not (ROOT/'data_processed_v12'/record['path']).is_file():
             raise FileNotFoundError(f'数据图片缺失：{record["path"]}')
     files = {ROOT/name for name in ROOT_FILES}
     files.add(ROOT/PRETRAINED)
@@ -37,7 +39,7 @@ def collect_files():
         if not folder.is_dir():
             raise FileNotFoundError(folder)
         files.update(p for p in folder.rglob('*') if p.is_file() and
-                     '__pycache__' not in p.parts and p.suffix != '.pyc')
+                     '__pycache__' not in p.parts and 'verification-temp' not in p.parts and p.suffix != '.pyc')
     for path in files:
         if path.is_symlink() or not path.resolve().is_relative_to(ROOT):
             raise ValueError(f'拒绝打包越界路径或符号链接：{path}')

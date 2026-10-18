@@ -1,4 +1,4 @@
-import {loadSession, recognize} from './inference.js?v=20261018-face-oe';
+import {loadSession, recognize} from './inference.js?v=20261018-v12';
 
 const $ = id => document.getElementById(id);
 const asset = path => new URL(path, import.meta.url).href;

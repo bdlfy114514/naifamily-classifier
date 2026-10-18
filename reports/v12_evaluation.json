@@ -1,0 +1,188 @@
+{
+  "best_epoch": 6,
+  "baseline_validation": {
+    "negative_by_source": {
+      "cartoon_face": {
+        "total": 90,
+        "false_accepted": 24,
+        "accepted_as_dounai": 3,
+        "top1_dounai": 29
+      },
+      "real_face": {
+        "total": 90,
+        "false_accepted": 0,
+        "accepted_as_dounai": 0,
+        "top1_dounai": 17
+      }
+    },
+    "known_total": 33,
+    "known_raw_correct": 33,
+    "known_accepted_correct": 33,
+    "known_rejected": 0,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 180,
+    "negative_false_accepted": 24,
+    "negative_top1_dounai": 46,
+    "negative_accepted_as_dounai": 3,
+    "balanced_score": 0.9333333333333333,
+    "known_cross_entropy": 0.16175860166549683
+  },
+  "best_validation": {
+    "negative_by_source": {
+      "cartoon_face": {
+        "total": 90,
+        "false_accepted": 0,
+        "accepted_as_dounai": 0,
+        "top1_dounai": 3
+      },
+      "real_face": {
+        "total": 90,
+        "false_accepted": 0,
+        "accepted_as_dounai": 0,
+        "top1_dounai": 16
+      }
+    },
+    "known_total": 33,
+    "known_raw_correct": 33,
+    "known_accepted_correct": 33,
+    "known_rejected": 0,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 180,
+    "negative_false_accepted": 0,
+    "negative_top1_dounai": 19,
+    "negative_accepted_as_dounai": 0,
+    "balanced_score": 1.0,
+    "known_cross_entropy": 0.10594629496335983
+  },
+  "baseline_test": {
+    "negative_by_source": {
+      "cartoon_face": {
+        "total": 90,
+        "false_accepted": 31,
+        "accepted_as_dounai": 6,
+        "top1_dounai": 27
+      },
+      "real_face": {
+        "total": 90,
+        "false_accepted": 0,
+        "accepted_as_dounai": 0,
+        "top1_dounai": 16
+      }
+    },
+    "known_total": 33,
+    "known_raw_correct": 32,
+    "known_accepted_correct": 31,
+    "known_rejected": 1,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 180,
+    "negative_false_accepted": 31,
+    "negative_top1_dounai": 43,
+    "negative_accepted_as_dounai": 6,
+    "balanced_score": 0.8835858585858586,
+    "known_cross_entropy": 0.22637833654880524
+  },
+  "candidate_test": {
+    "negative_by_source": {
+      "cartoon_face": {
+        "total": 90,
+        "false_accepted": 0,
+        "accepted_as_dounai": 0,
+        "top1_dounai": 2
+      },
+      "real_face": {
+        "total": 90,
+        "false_accepted": 0,
+        "accepted_as_dounai": 0,
+        "top1_dounai": 14
+      }
+    },
+    "known_total": 33,
+    "known_raw_correct": 32,
+    "known_accepted_correct": 32,
+    "known_rejected": 1,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 180,
+    "negative_false_accepted": 0,
+    "negative_top1_dounai": 16,
+    "negative_accepted_as_dounai": 0,
+    "balanced_score": 0.9848484848484849,
+    "known_cross_entropy": 0.14443184435367584
+  },
+  "limitations": "Known test remains the legacy 33-image holdout; synthetic expansion is training-only. Negative results cover held-out real faces and sampled 2D cartoon avatars, not all cartoons/3D characters. Canvas/Pillow may differ.",
+  "version": "v1.2",
+  "preprocessing": {
+    "total": 448,
+    "splits": {
+      "val": 33,
+      "test": 33,
+      "train": 382
+    },
+    "added": 220,
+    "two_pixel_crops": 40,
+    "duplicates": [],
+    "missing_parent_training_records": [
+      {
+        "source": "奶鸡/Screenshot_2026_1017_183727.png",
+        "path": "train/奶鸡/0de1669b2af17a4ab182.png",
+        "class": "奶鸡",
+        "split": "train",
+        "sha256": "0de1669b2af17a4ab18215441842c19fed3c2d262a915b23f8f110182ba10ace"
+      }
+    ],
+    "split_policy": "All new correlated synthetic images train-only; original val/test retained"
+  },
+  "onnx_verification": {
+    "total": 180,
+    "max_logit_error": 6.183981895446777e-07,
+    "same_top1": true,
+    "same_rejections": true,
+    "onnx_false_accepted": 0,
+    "ratio": 1.5,
+    "by_source": {
+      "cartoon_face": {
+        "total": 90,
+        "false_accepted": 0
+      },
+      "real_face": {
+        "total": 90,
+        "false_accepted": 0
+      }
+    }
+  },
+  "browser_report": "v12_browser_evaluation.json",
+  "model_sha256": "ae133110b271e54ac4289d34c953cef9a3c3b12312018909dca5bff7ba3d398f",
+  "browser_summary": {
+    "modelSha256": "ae133110b271e54ac4289d34c953cef9a3c3b12312018909dca5bff7ba3d398f",
+    "version": "v1.2",
+    "knownTotal": 33,
+    "knownRawCorrect": 32,
+    "knownAcceptedCorrect": 32,
+    "dounaiTotal": 3,
+    "dounaiAcceptedCorrect": 3,
+    "negativeBySource": {
+      "real_face": {
+        "total": 90,
+        "falseAccepted": 1,
+        "acceptedAsDounai": 1
+      },
+      "cartoon_face": {
+        "total": 90,
+        "falseAccepted": 0,
+        "acceptedAsDounai": 0
+      }
+    }
+  },
+  "negative_sources": {
+    "LFW": "https://ndownloader.figshare.com/files/5976015",
+    "CartoonSet": "https://google.github.io/cartoonset/download.html",
+    "mirror": "https://huggingface.co/datasets/cgarciae/cartoonset/resolve/1.0.0/data/cartoonset10k.tgz"
+  }
+}

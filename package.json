@@ -1,8 +1,10 @@
 {
   "name": "naifamily-classifier",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "奶家人识别器：在浏览器中运行 CNN 的 GitHub Pages 网站",
-  "scripts": {"test": "node --test tests/web.test.mjs"}
+  "scripts": {
+    "test": "node --test tests/web.test.mjs"
+  }
 }

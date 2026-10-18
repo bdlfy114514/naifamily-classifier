@@ -52,7 +52,15 @@ def evaluate(model,known,negative,device,dounai_index,ratio=1.5):
     accept=top.values[:,0]>ratio*top.values[:,1]; na=ntop.values[:,0]>ratio*ntop.values[:,1]
     pred=top.indices[:,0]; npred=ntop.indices[:,0]; mask=y==dounai_index
     kcorrect=int(((pred==y)&accept).sum()); nreject=int((~na).sum())
-    return dict(known_total=len(y),known_raw_correct=int((pred==y).sum()),known_accepted_correct=kcorrect,
+    records=getattr(negative.dataset,'records',[])
+    sources=[r.get('source_kind','real_face') for r in records] if records else ['unknown']*len(n)
+    by_source={}
+    for source in sorted(set(sources)):
+        mask_source=torch.tensor([s==source for s in sources])
+        by_source[source]=dict(total=int(mask_source.sum()),false_accepted=int((na&mask_source).sum()),
+                              accepted_as_dounai=int(((npred==dounai_index)&na&mask_source).sum()),
+                              top1_dounai=int(((npred==dounai_index)&mask_source).sum()))
+    return dict(negative_by_source=by_source,known_total=len(y),known_raw_correct=int((pred==y).sum()),known_accepted_correct=kcorrect,
                 known_rejected=int((~accept).sum()),dounai_total=int(mask.sum()),
                 dounai_raw_correct=int(((pred==y)&mask).sum()),dounai_accepted_correct=int(((pred==y)&mask&accept).sum()),
                 negative_total=len(n),negative_false_accepted=int(na.sum()),negative_top1_dounai=int((npred==dounai_index).sum()),
@@ -62,6 +70,7 @@ def evaluate(model,known,negative,device,dounai_index,ratio=1.5):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--data',type=Path,default=ROOT/'data_processed')
     p.add_argument('--weights',type=Path,default=ROOT/'runs/resnet18_transfer_v1/best.pt')
     p.add_argument('--negatives',type=Path,default=ROOT/'hard_negatives/lfw')
     p.add_argument('--output',type=Path,default=ROOT/'runs/resnet18_face_oe_v1')
@@ -76,10 +85,14 @@ def main():
     args.output.mkdir(parents=True,exist_ok=True)
     seed_everything(20261018);torch.set_num_threads(2);device=select_device(args.device)
     ckpt=torch.load(args.weights,map_location='cpu',weights_only=True)
-    data=ROOT/'data_processed'; manifest=load_manifest(data)
-    if manifest!=ckpt['manifest']:raise ValueError('Known dataset split changed')
+    data=args.data; manifest=load_manifest(data)
+    if manifest['classes']!=ckpt['classes']:raise ValueError('Class mapping changed')
+    # Training expansion is allowed, while held-out examples must remain unchanged.
+    for split in ('val','test'):
+        signature=lambda m:sorted((r['path'],r['class'],r['sha256']) for r in m['records'] if r['split']==split)
+        if signature(manifest)!=signature(ckpt['manifest']):raise ValueError('Held-out known split changed')
     nm=json.loads((args.negatives/'manifest.json').read_text(encoding='utf8'));validate_negatives(args.negatives,nm)
-    normalization=ckpt['normalization'];prep=ckpt['preprocess'];classes=ckpt['classes']
+    normalization=ckpt['normalization'];prep=manifest['preprocess'];classes=ckpt['classes']
     def kl(split,training=False):return DataLoader(ManifestDataset(data,manifest,split,build_transform(training,**normalization,augmentation='gentle')),batch_size=16,shuffle=training)
     def nl(split,training=False):return DataLoader(FaceNegatives(args.negatives,nm,split,prep,normalization,training),batch_size=16,shuffle=training)
     train,negtrain=kl('train',True),nl('train',True);val,nval=kl('val'),nl('val')
@@ -105,7 +118,7 @@ def main():
         checkpoint.update(model_state={k:v.detach().cpu().clone() for k,v in model.state_dict().items()},
                           epoch=epoch,val_accuracy=metrics['known_raw_correct']/metrics['known_total'],
                           val_loss=metrics['known_cross_entropy'],training_config=config,rejection_validation=metrics,
-                          parent_weights=str(args.weights),method='outlier_exposure')
+                          parent_weights=str(args.weights),method='outlier_exposure',manifest=manifest,preprocess=prep)
         torch.save(checkpoint,args.output/'best.pt')
     save(0,baseline)
     for epoch in range(1,args.epochs+1):
@@ -129,7 +142,7 @@ def main():
         row=dict(epoch=epoch,train_loss=loss_sum/total,val_loss=metrics['known_cross_entropy'],**metrics)
         history.append(row);write_json(args.output/'history.json',history)
         if score>best_score:best_score=score;best_epoch=epoch;save(epoch,metrics)
-        print(f'EPOCH {epoch} loss={loss_sum/total:.4f} known={metrics["known_raw_correct"]}/33 accepted={metrics["known_accepted_correct"]}/33 neg_accept={metrics["negative_false_accepted"]}/90 score={metrics["balanced_score"]:.4f} best={best_epoch}',flush=True)
+        print(f'EPOCH {epoch} loss={loss_sum/total:.4f} known={metrics["known_raw_correct"]}/{metrics["known_total"]} accepted={metrics["known_accepted_correct"]}/{metrics["known_total"]} neg_accept={metrics["negative_false_accepted"]}/{metrics["negative_total"]} score={metrics["balanced_score"]:.4f} best={best_epoch}',flush=True)
     plot_history(history,args.output/'loss_curve.png')
     # Held-out tests run only after validation-only model selection is complete.
     best=torch.load(args.output/'best.pt',map_location='cpu',weights_only=True);model.load_state_dict(best['model_state'])
@@ -138,7 +151,7 @@ def main():
     model.load_state_dict(ckpt['model_state']);baseline_test=evaluate(model,test,ntest,device,classes.index('豆奶'))
     report=dict(best_epoch=best_epoch,baseline_validation=baseline,best_validation=best['rejection_validation'],
                 baseline_test=baseline_test,candidate_test=candidate,
-                limitations='LFW real faces only; no claim about cartoon faces, full-body images or all unknowns. Canvas/Pillow may differ.')
+                limitations='Known test remains the legacy 33-image holdout; synthetic expansion is training-only. Negative results cover held-out real faces and sampled 2D cartoon avatars, not all cartoons/3D characters. Canvas/Pillow may differ.')
     write_json(args.output/'evaluation.json',report);print(json.dumps(report,ensure_ascii=False,indent=2),flush=True)
 
 if __name__=='__main__':main()

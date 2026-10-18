@@ -65,7 +65,7 @@ def run_epoch(model, loader, criterion, device, optimizer=None, scaler=None, amp
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--data', type=Path, default=Path(__file__).parent/'data_processed')
+    p.add_argument('--data', type=Path, default=Path(__file__).parent/'data_processed_v12')
     p.add_argument('--output', type=Path, help='默认 runs/时间戳；须为空目录')
     p.add_argument('--device', choices=['auto', 'cuda', 'xpu', 'cpu'], default='auto')
     p.add_argument('--arch', choices=['resnet18', 'scratch'], default='resnet18')
