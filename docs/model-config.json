@@ -70,7 +70,8 @@
   ],
   "model": "assets/naifamily.onnx",
   "modelBytes": 44719142,
-  "modelSha256": "293f704758240031b471ca4b93c069e566ea97d262436dc272f7061a7eb456f5",
+  "modelSha256": "73079a4d13ba7f31fab7c34b5265927ac5bf898fd5403400e667a3c52574e203",
+  "minTopScoreRatio": 1.5,
   "fallbackClass": "小奶",
   "unknownMessage": "ops! 您上传的的图片中似乎没有奶家人",
   "metrics": {
@@ -80,7 +81,7 @@
   },
   "source": {
     "architecture": "resnet18",
-    "bestEpoch": 9
-  },
-  "minTopScoreRatio": 1.5
+    "bestEpoch": 8,
+    "trainingMethod": "outlier_exposure"
+  }
 }

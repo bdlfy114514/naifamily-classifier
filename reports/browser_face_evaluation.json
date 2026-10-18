@@ -1,0 +1,11 @@
+{
+  "modelSha256": "73079a4d13ba7f31fab7c34b5265927ac5bf898fd5403400e667a3c52574e203",
+  "negativeTotal": 90,
+  "negativeFalseAccepted": 0,
+  "negativeAcceptedAsDounai": 0,
+  "knownTotal": 33,
+  "knownRawCorrect": 32,
+  "knownAcceptedCorrect": 31,
+  "dounaiTotal": 3,
+  "dounaiAcceptedCorrect": 3
+}

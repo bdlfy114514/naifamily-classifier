@@ -25,7 +25,8 @@ cd naifamily-classifier
 
 - 全部源代码、本文档、依赖清单和环境配置脚本；
 - `data_processed/`：229 张已处理图片及固定划分，train/val/test 分别为 163/33/33；
-- `runs/resnet18_transfer_v1/`：最优 Python 权重、训练配置、日志及 loss 曲线；
+- `runs/resnet18_face_oe_v1/`：当前最优 Python 权重、人脸负样本微调日志、loss 曲线及评估报告；
+- `runs/resnet18_transfer_v1/`：微调前的基线权重与日志，供复现比较；
 - `.cache/torch/checkpoints/resnet18-f37072fd.pth`：预训练初始化权重，避免训练时再次下载；
 - 对应测试报告、网页文件、展示图和 ONNX 浏览器模型；
 - `KIT_MANIFEST.json`：包内各文件的大小和 SHA-256，用于完整性核验。
@@ -281,7 +282,7 @@ raw_images/
 测试训练包内已保存的最优模型：
 
 ```powershell
-.\.venv\Scripts\python.exe test.py --weights runs\resnet18_transfer_v1\best.pt --device auto --output test_results\verify_best
+.\.venv\Scripts\python.exe test.py --weights runs\resnet18_face_oe_v1\best.pt --device auto --output test_results\verify_best
 ```
 
 ### 5.2 单张图片
@@ -323,9 +324,46 @@ raw_images/
 | --- | --- |
 | 原始轻量 CNN | 26/33 = 78.79% |
 | ResNet18 微调 | 32/33 = 96.97% |
-| ONNX 导出模型 | 32/33 = 96.97%，与 PyTorch 预测一致 |
+| 人脸负样本微调（当前网页模型） | 32/33 = 96.97% |
+| 当前 ONNX 导出模型 | 32/33 = 96.97%，与 PyTorch 预测一致 |
 
-以上是未启用拒识时、当前固定划分的分类结果。网页启用阈值后会拒绝部分低分已知类别；不能将该结果视为任意上传图片的准确率。测试集较小，每张图片约影响 3.03 个百分点，不同硬件或数据划分的结果也可能变化。本项目用于学习和娱乐。
+以上是未启用拒识时、当前固定划分的分类结果。网页启用分数比判定后会拒绝部分分数接近的已知类别；不能将该结果视为任意上传图片的准确率。测试集较小，每张图片约影响 3.03 个百分点，不同硬件或数据划分的结果也可能变化。本项目用于学习和娱乐。
+
+### 7.1 人脸负样本微调与复现
+
+早期模型将本次 LFW 保留测试集的 90 张人脸全部接受为豆奶。为此，当前模型采用 **Outlier Exposure（异常样本暴露）**，保留原来的 ResNet18 + Dropout(0.2) + Linear(512,11) 架构和 11 个类别，不增加“人脸”奶家人类别。
+
+负样本来自 [LFW 公开人脸数据](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_lfw_people.html)，使用 scikit-learn 官方源代码列出的 Figshare 镜像和 SHA-256 校验值。脚本随机选取 600 位不同人物，各一张图片，按身份划分为训练 420、验证 90、测试 90 张（seed=20261018）。身份及图像 SHA-256 不跨集合；原有 229 张奶家人和划分不变。图片仅用于非奶家人负样本训练，不训练人物身份识别。下载原始图像的使用与再分发应遵守源数据要求，Git 仓库不包含这些图片。
+
+训练损失为 `L = CE(已知奶家人, 标签, smoothing=0.05) + 1.0 × KL(Uniform(11) || Softmax(人脸负样本))`。当未知图片的类别分数趋于均匀时，第一名不会明显领先第二名，从而触发现有拒判规则。此方法参考 [Deep Anomaly Detection with Outlier Exposure](https://arxiv.org/abs/1812.04606)，这里没有使用强化学习。
+
+从原最优权重继续训练 24 轮，微调 Layer 3 / Layer 4 / 分类头，冻结 BatchNorm 运行统计，主干学习率 2e-5、分类头 2e-4、AdamW weight_decay=0.01、batch_size=16，余弦退火。仅用验证集的“已知样本正确接受率与负样本拒判率的平均值”选择模型，同分参考已知分类正确数及 CE loss；第 8 轮获选。保留测试集在选模结束后评估，不用于选超参数。
+
+| 保留测试指标 | 原模型 | 当前模型 |
+| --- | --- | --- |
+| 已知类别原始分类正确 | 32/33 | 32/33 |
+| 已知类别正确接受（含拒判） | 31/33 | 31/33 |
+| 真豆奶正确接受 | 3/3 | 3/3 |
+| 未知人脸误接受为任意奶家人 | 90/90 | 0/90 |
+| 未知人脸误接受为豆奶 | 90/90 | 0/90 |
+
+这些数字来自同一保留集合。样本较少，特别是豆奶只有 3 张测试图；不能保证对所有人脸、卡通人物、全身照片或未知生物都有效。部分负样本仍把豆奶排第一，但因分数接近而拒判，这是正常行为。网页仍严格使用 `p1 > 1.5 × p2`，没有额外调高门槛。
+
+```powershell
+# 下载并校验公开负样本，写入 hard_negatives/lfw；约 232 MiB 压缩下载
+.\.venv\Scripts\python.exe scripts\prepare_face_negatives.py
+
+# 从基线继续微调，输出目录必须为空
+.\.venv\Scripts\python.exe scripts\train_face_rejection.py --device auto --output runs\local_face_oe_001
+
+# 导出自己训练的模型
+.\.venv\Scripts\python.exe export_web.py --weights runs\local_face_oe_001\best.pt
+
+# 验证本项目当前权重与网页 ONNX 在人脸测试集上的一致性
+.\.venv\Scripts\python.exe scripts\verify_face_onnx.py
+```
+
+[reports/face_rejection_evaluation.json](reports/face_rejection_evaluation.json) 保存可在仓库查看的原模型与当前模型比较及 ONNX 核验；[浏览器端验证报告](reports/browser_face_evaluation.json) 另记录 Canvas + ONNX Runtime WASM 实测，同样为人脸 0/90 误接受、已知 32/33 分类正确、真豆奶 3/3 正确接受。本地还有 `runs/resnet18_face_oe_v1/evaluation.json`；`negative_manifest.json` 保存来源、分组、路径和校验信息；`history.json` 与 `loss_curve.png` 保存训练轨迹。曲线中的 train loss 包含负样本损失，val loss 是已知类别 CE，两者定义不同。当前训练包可在本地运行 `scripts/package_training.py` 重新生成，包含负样本、两份权重和新增脚本；GitHub Release 中此前上传的压缩包不自动替换。
 
 常见问题：
 

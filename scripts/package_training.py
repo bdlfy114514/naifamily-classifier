@@ -13,14 +13,16 @@ PREFIX = 'naifamily-training-kit'
 ROOT_FILES = ['README.md', '.gitignore', 'package.json', 'model.py', 'common.py', 'train.py',
               'test.py', 'preprocess.py', 'preprocess_config.json', 'export_web.py',
               'setup_env.ps1', 'requirements.txt', 'requirements-web.txt', 'requirements-lock.txt']
-DIRECTORIES = ['scripts', 'tests', 'docs', 'show', 'data_processed',
-               'runs/resnet18_transfer_v1', 'test_results/resnet18_transfer_v1']
+DIRECTORIES = ['scripts', 'tests', 'reports', 'docs', 'show', 'data_processed',
+               'runs/resnet18_transfer_v1', 'test_results/resnet18_transfer_v1',
+               'runs/resnet18_face_oe_v1', 'hard_negatives/lfw']
 PRETRAINED = '.cache/torch/checkpoints/resnet18-f37072fd.pth'
 
 
 def collect_files():
     required = [*ROOT_FILES, 'data_processed/manifest.json',
-                'runs/resnet18_transfer_v1/best.pt', PRETRAINED]
+                'runs/resnet18_transfer_v1/best.pt', 'runs/resnet18_face_oe_v1/best.pt',
+                'hard_negatives/lfw/manifest.json', PRETRAINED]
     missing = [name for name in required if not (ROOT/name).is_file()]
     if missing:
         raise FileNotFoundError(f'训练包缺少必要文件：{missing}')

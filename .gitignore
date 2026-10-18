@@ -9,3 +9,5 @@ test_results/
 artifacts/
 dist/
 *.pt
+
+hard_negatives/

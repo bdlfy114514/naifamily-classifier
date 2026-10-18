@@ -1,10 +1,12 @@
-import {summarizeScores} from './inference-utils.mjs?v=20261017-ratio15';
+import {summarizeScores} from './inference-utils.mjs?v=20261018-face-oe';
 
 const relativeURL = path => new URL(path, import.meta.url).href;
 let sessionPromise;
 
 async function fetchModel(config, progress) {
-  const response = await fetch(relativeURL(config.model));
+  const modelURL = new URL(relativeURL(config.model));
+  modelURL.searchParams.set('v', config.modelSha256);
+  const response = await fetch(modelURL.href);
   if (!response.ok) throw new Error('模型下载失败，请检查网络后重试。');
   let bytes;
   if (response.body?.getReader) {

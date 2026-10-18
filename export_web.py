@@ -19,7 +19,7 @@ from preprocess import write_json
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--weights', type=Path, default=Path('runs/resnet18_transfer_v1/best.pt'))
+    parser.add_argument('--weights', type=Path, default=Path('runs/resnet18_face_oe_v1/best.pt'))
     parser.add_argument('--output', type=Path, default=Path('docs'))
     parser.add_argument('--data', type=Path, default=Path('data_processed'))
     args = parser.parse_args()
@@ -81,7 +81,8 @@ def main():
         'minTopScoreRatio': min_top_score_ratio, 'fallbackClass': '小奶',
         'unknownMessage': 'ops! 您上传的的图片中似乎没有奶家人',
         'metrics': {'correct': correct, 'total': len(labels), 'accuracy': correct/len(labels)},
-        'source': {'architecture': checkpoint['model_config']['arch'], 'bestEpoch': checkpoint['epoch']},
+        'source': {'architecture': checkpoint['model_config']['arch'], 'bestEpoch': checkpoint['epoch'],
+                   'trainingMethod': checkpoint.get('method', 'supervised_transfer')},
     }
     write_json(args.output/'model-config.json', metadata)
     report = {
@@ -91,7 +92,7 @@ def main():
         'validationAccepted': int((np.sort(val_prob, axis=1)[:, -1] >
                                    np.sort(val_prob, axis=1)[:, -2] * min_top_score_ratio).sum()),
         'validationTotal': len(val), 'modelSha256': metadata['modelSha256'],
-        'note': '分数比只是拒识规则，未用真实负样本校准，不能保证排除所有非奶家人图片。',
+        'note': '分数比规则不等同于可靠未知检测；人脸负样本测试不覆盖所有未知输入。',
     }
     write_json(Path('artifacts/web_export_report.json'), report)
     print(json.dumps(report, ensure_ascii=False, indent=2))

@@ -1,0 +1,89 @@
+{
+  "best_epoch": 8,
+  "baseline_validation": {
+    "known_total": 33,
+    "known_raw_correct": 33,
+    "known_accepted_correct": 33,
+    "known_rejected": 0,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 90,
+    "negative_false_accepted": 90,
+    "negative_top1_dounai": 90,
+    "negative_accepted_as_dounai": 90,
+    "balanced_score": 0.5,
+    "known_cross_entropy": 0.1396854817867279
+  },
+  "best_validation": {
+    "known_total": 33,
+    "known_raw_correct": 33,
+    "known_accepted_correct": 33,
+    "known_rejected": 0,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 90,
+    "negative_false_accepted": 0,
+    "negative_top1_dounai": 17,
+    "negative_accepted_as_dounai": 0,
+    "balanced_score": 1.0,
+    "known_cross_entropy": 0.16175860166549683
+  },
+  "baseline_test": {
+    "known_total": 33,
+    "known_raw_correct": 32,
+    "known_accepted_correct": 31,
+    "known_rejected": 1,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 90,
+    "negative_false_accepted": 90,
+    "negative_top1_dounai": 90,
+    "negative_accepted_as_dounai": 90,
+    "balanced_score": 0.4696969696969697,
+    "known_cross_entropy": 0.23157916963100433
+  },
+  "candidate_test": {
+    "known_total": 33,
+    "known_raw_correct": 32,
+    "known_accepted_correct": 31,
+    "known_rejected": 1,
+    "dounai_total": 3,
+    "dounai_raw_correct": 3,
+    "dounai_accepted_correct": 3,
+    "negative_total": 90,
+    "negative_false_accepted": 0,
+    "negative_top1_dounai": 16,
+    "negative_accepted_as_dounai": 0,
+    "balanced_score": 0.9696969696969697,
+    "known_cross_entropy": 0.22637833654880524
+  },
+  "limitations": "LFW real faces only; no claim about cartoon faces, full-body images or all unknowns. Canvas/Pillow may differ.",
+  "onnx_verification": {
+    "total": 90,
+    "max_logit_error": 5.364418029785156e-07,
+    "same_top1": true,
+    "same_rejections": true,
+    "onnx_false_accepted": 0,
+    "ratio": 1.5
+  },
+  "model_sha256": "73079a4d13ba7f31fab7c34b5265927ac5bf898fd5403400e667a3c52574e203",
+  "data": {
+    "known": {
+      "train": 163,
+      "val": 33,
+      "test": 33
+    },
+    "unknown_faces": {
+      "train": 420,
+      "val": 90,
+      "test": 90
+    },
+    "negative_source": "https://ndownloader.figshare.com/files/5976015",
+    "negative_archive_sha256": "b47c8422c8cded889dc5a13418c4bc2abbda121092b3533a83306f90d900100a",
+    "identity_disjoint": true,
+    "seed": 20261018
+  }
+}
